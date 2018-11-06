@@ -1,7 +1,5 @@
-<<<<<<< HEAD
+
 # 免单H5
-=======
-# h5-youhuigou
 
 > \"点我优惠购h5\"
 
@@ -47,6 +45,3 @@ npm install
 
 npm run dev
 ```
-
-
->>>>>>> update
