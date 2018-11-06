@@ -10,16 +10,6 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-      '/base_url':{
-        target:'http://api.buy.51zhuanfan.com',
-        secure:false,
-        changeOrigin:true,
-        pathRewrite:{
-          '^/base_url':'http://api.buy.51zhuanfan.com'
-        }
-      }
-    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -29,7 +19,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */
