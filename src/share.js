@@ -78,9 +78,9 @@ let share = (get, wx) => {
       console.log("验证失败：", res);
     });
     wx.ready(function() {
-      var imgurl = "http://dl.buy.51zhuanfan.com/res/img/share-20180816.jpg";
-      var title = "双十一翻海购";
-      var desc = "余欢";
+      var imgurl = "http://dl.buy.51zhuanfan.com/res/20181025/image/banner.png";
+      var title = "点我优惠购";
+      var desc = "双十一嗨翻";
       wx.onMenuShareTimeline({
         title: title, // 分享标题
         desc: desc, // 分享描述
