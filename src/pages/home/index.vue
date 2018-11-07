@@ -162,6 +162,13 @@ export default {
     }
   },
   activated() {
+    // 判断是否有邀请码，没有就跳转填写页面
+   let invite = this.$store.state.invite
+   console.log(invite)
+   if (!invite) {
+     this.$router.push('/invite')
+   }
+
     // 购物车数量
     this.getCartCount()
 
@@ -173,7 +180,8 @@ export default {
     this.share(this.get2,this.wx,this.$store.state.shareImg)
 
     // 页面恢复离开之前的位置
-  window.scrollTo(0,this.scrollTop)
+   window.scrollTo(0,this.scrollTop)
+
 
   }
 };

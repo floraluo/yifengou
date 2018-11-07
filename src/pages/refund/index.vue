@@ -8,7 +8,7 @@
     <div class="input_info">
       <div class='tip'>收款支付宝
         <span class='text1'>（{{bindList.bind_time}}）</span>
-        <span class='text2'>ID: 54355</span>
+        <span class='text2'>ID: {{id}}</span>
       </div>
       <div class="form">
         <div class='text'>
@@ -40,7 +40,8 @@ export default {
     return {
       zfbUsername:'',
       zfbAccount:'',
-      phone:''
+      phone:'',
+      id:''
     };
   },
   computed: {
@@ -85,16 +86,23 @@ export default {
     // 获取用户信息
     getUserInfo(){
       this.$get('/user/info').then(res=>{
-        console.log(res)
+        console.log('用户信息',res)
         if (res.data.code === 200) {
           this.zfbUsername = res.data.data.zfbUsername
           this.zfbAccount = res.data.data.zfbAccount
           this.phone = res.data.data.phone
+          this.id = res.data.data.id
         }
       })
     }
   },
   mounted() {
+    // 判断是否有邀请码，没有就跳转填写页面
+   let invite = this.$store.state.invite
+   if (!invite) {
+     this.$router.push('/invite')
+   }
+   
     this.getUserInfo();
     // 分享
     this.share(this.get2,this.wx,this.$store.state.shareImg)
