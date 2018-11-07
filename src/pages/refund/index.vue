@@ -2,40 +2,102 @@
   <div class="bind">
     <div class="invite_code">
       <div class="tip">
-        邀请码<span>qwer</span>
+        邀请码<span>{{invite}}</span>
       </div>
     </div>
     <div class="input_info">
       <div class='tip'>收款支付宝
-        <span class='text1'>（请在11月30日前完成绑定）</span>
+        <span class='text1'>（{{bindList.bind_time}}）</span>
         <span class='text2'>ID: 54355</span>
       </div>
       <div class="form">
         <div class='text'>
           <span class='inputType'>真实姓名</span>
-          <input placeholder='输入真实姓名' type='text' />
+          <input placeholder='输入真实姓名' v-model="zfbUsername" type='text' />
         </div>
         <div class='text'>
           <span class='inputType'>支付宝账号</span>
-          <input placeholder='输入支付宝账号' type="text" />
+          <input placeholder='输入支付宝账号' v-model="zfbAccount" type="text" />
         </div>
         <div class='text'>
           <span class='inputType'>手机号</span>
-          <input placeholder='输入手机号' type="text" />
+          <input placeholder='输入手机号' v-model="phone" type="text" />
         </div>
-        <div class="save_btn">保存</div>
+        <div class="save_btn" @click="saveUserInfo">保存</div>
       </div>
       <div class="warning">
-        为了保证您能收到平台补贴金, 请务必确认填写正确。返款时间: 12月21日 - 12月31日
+        {{bindList.refund_time}}
       </div>
     </div>
+    <tabbar />
   </div>
 </template>
 
 <script>
+import tabbar from "@/components/tabbar";
 export default {
   data() {
-    return {};
+    return {
+      zfbUsername:'',
+      zfbAccount:'',
+      phone:''
+    };
+  },
+  computed: {
+    bindList() {
+      return this.$store.state.bindList;
+    },
+    // 邀请码
+    invite() {
+      return this.$store.state.invite;
+    }
+  },
+  components: {
+    tabbar
+  },
+  methods: {
+    // 保存用户信息
+    saveUserInfo(){
+      if (!this.zfbUsername) {
+        this.$toast.center('真实姓名不能为空');
+        return;
+      }
+      if (!this.zfbAccount) {
+        this.$toast.center('支付宝账号不能为空');
+        return;
+      }
+      if (!this.phone) {
+        this.$toast.center('手机号码不能为空');
+        return;
+      }
+      this.$post('/user/payinfo/save',{
+        zfbUsername:this.zfbUsername,
+        zfbAccount:this.zfbAccount,
+        phone:this.phone
+      }).then(res=>{
+        console.log(res)
+        if (res.data.code === 200){
+          this.$toast.center('保存成功')
+        }
+      })
+    },
+
+    // 获取用户信息
+    getUserInfo(){
+      this.$get('/user/info').then(res=>{
+        console.log(res)
+        if (res.data.code === 200) {
+          this.zfbUsername = res.data.data.zfbUsername
+          this.zfbAccount = res.data.data.zfbAccount
+          this.phone = res.data.data.phone
+        }
+      })
+    }
+  },
+  mounted() {
+    this.getUserInfo();
+    // 分享
+    this.share(this.get2,this.wx)
   }
 };
 </script>
@@ -43,7 +105,7 @@ export default {
 <style>
 .bind .invite_code,
 .bind .input_info {
-  margin: 0 10px 10px;
+  margin: 10px;
   background: white;
   padding: 10px 0 10px;
   font-size: 16px;
@@ -97,10 +159,12 @@ export default {
 }
 .bind .input_info .form input {
   width: 64%;
+  font-size: 14px;
   background-color: #eee;
   border: none;
+  outline: none;
 }
-.bind .input_info .form .save_btn{
+.bind .input_info .form .save_btn {
   width: 100%;
   height: 40px;
   line-height: 40px;
@@ -109,7 +173,7 @@ export default {
   background: #3f93e6;
   border-radius: 5px;
 }
-.bind .input_info .warning{
+.bind .input_info .warning {
   margin-left: 10px;
   font-size: 12px;
   color: #ec4e4f;
@@ -130,7 +194,7 @@ export default {
     margin-right: 10px;
   }
   .bind .input_info .form {
-  margin: 10px;
-}
+    margin: 10px;
+  }
 }
 </style>

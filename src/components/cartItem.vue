@@ -1,28 +1,49 @@
 <template>
-    <!-- 商品列表组件 -->
-    <div class="list_item">
-        <div class="goods_img">
-            <img src="http://img14.360buyimg.com/n1/jfs/t26941/123/1324560723/187593/bcea52d1/5bc6a088N94503c2c.png" alt="">
-        </div>
-        <div class="goods_info">
-            <div class="goods_name">朴物大美（pwubeauty） PWU小苍兰香氛系列洗发水 无硅油去屑止痒含玻尿酸 锁水保湿持久留香 小苍兰洗发水90ml</div>
-            <div class="goods_price">
-                <div class="now_price">¥9.9</div>
-                <div class="before_price">¥19.9</div>
-            </div>
-            <div class="goods_coupon">
-                <div class='coupon_name'>券</div>
-                <div class='coupon_price'>¥10</div>
-            </div>
-        </div>
-        <i class="iconfont icon-shanchu"></i>
+  <!-- 商品列表组件 -->
+  <div class="list_item">
+    <div class="goods_img">
+      <img :src="pic">
     </div>
+    <div class="goods_info">
+      <div class="goods_name">{{name}}</div>
+      <div class="goods_price">
+        <div class="now_price">¥{{couponPrice}}</div>
+        <div class="before_price">原价: ¥{{goodsPrice}}</div>
+      </div>
+      <div class="goods_coupon">
+        <div class='coupon_name'>券</div>
+        <div class='coupon_price'>¥{{discountPrice}}</div>
+      </div>
+    </div>
+    <i class="iconfont icon-shanchu" @click.stop="reduceCart(id)"></i>
+  </div>
 </template>
 
 <script>
 export default {
+  props: {
+    id: Number,
+    pic: String,
+    name: String,
+    couponPrice: Number,
+    discountPrice: Number,
+    goodsPrice: Number
+  },
   data() {
     return {};
+  },
+  methods:{
+    // 删除购物车
+    reduceCart(id){
+      this.$get('/cart/del',{id}).then(res=>{
+        console.log('删除',res)
+        if (res.data.code === 200) {
+          this.$toast.center('删除成功')
+          // 删除的同时需要派发一个事件给父组件（这里指cart页面），事件通知父组件更新购物车列表
+          this.$emit('updateCartList')
+        }
+      })
+    }
   }
 };
 </script>
@@ -65,10 +86,10 @@ export default {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-@media only screen and (max-width:320px){
-    .list_item .goods_info .goods_name{
-        font-size: 14px;
-    }
+@media only screen and (max-width: 320px) {
+  .list_item .goods_info .goods_name {
+    font-size: 14px;
+  }
 }
 .list_item .goods_info .goods_price {
   display: flex;
@@ -103,8 +124,8 @@ export default {
   border-right: 1px dotted #ec4e4f;
   margin-right: 10px;
 }
-.list_item .iconfont{
-    position: absolute;
+.list_item .iconfont {
+  position: absolute;
   color: #e94f4f;
   font-size: 30px;
   right: 25px;

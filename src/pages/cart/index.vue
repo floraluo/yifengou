@@ -1,46 +1,100 @@
 <template>
   <div class="cart_list">
-    <!-- 返回按钮组件 -->
-    <go-back :from="from" :idx="idx"/>
+    <div v-if="!cartList.length" class="no_cartlist">购物车为空</div>
     <!-- 购物车列表 -->
-    <cart-item></cart-item>
+    <cart-item 
+      v-for="(item,index) in cartList" 
+      :key="index" 
+      @click.native="goBuy(item.id)" 
+      :id="item.id" 
+      :pic="item.goodsImg" 
+      :name="item.goodsContent" 
+      :couponPrice="item.couponPrice" 
+      :discountPrice="item.discountPrice" 
+      :goodsPrice="item.goodsPrice"
+      @updateCartList="updateList"
+      >
+      </cart-item>
+    <tabbar/>
   </div>
 </template>
 
 <script>
 import cartItem from '@/components/cartItem'
-import goBack from '@/components/goBack'
+import tabbar from '@/components/tabbar'
 export default {
   data(){
     return {
-      from:'', // 此次页面从哪个路由进来
-      idx:0, // 主页带来的idx参数，用于返回判断哪个高亮
+      cartList:[]
     }
-  },
-  // 路由导航守卫钩子,进入页面之前触发
-  beforeRouteEnter(to, from, next){
-    console.log('from:',from)
-    // 每次进入该页面记录来源，便于返回到来源
-    next(vm=>{
-      vm.from = from.fullPath
-    })
   },
   components:{
     cartItem,
-    goBack
+    tabbar
+  },
+  methods:{
+    // 获取购物车列表
+    getCartList(){
+      this.$get('/cart/list').then(res=>{
+        console.log('获取',res)
+        if (res.data.code === 200) {
+          this.cartList = res.data.data
+        } else {
+          this.cartList = []
+        }
+      })
+    },
+
+    // 删除后 更新列表
+    updateList(){
+      this.getCartList()
+    },
+
+    // 点击购买商品
+    goBuy(id) {
+      this.$get("/goods/link", { id }).then(res => {
+        console.log(res);
+        if (res.data.code === 200) {
+          if (res.data.data.limit && res.data.data.link) {
+            this.$toast.center(res.data.data.limitMsg);
+          } else {
+            if (res.data.data.link) {
+              console.log(res.data.data.link);
+            }
+          }
+        } else if (res.data.code === 1001) {
+          this.$toast.center("活动时间还没到哦");
+        } else if (res.data.code === 1002) {
+          this.$toast.center("活动时间已经结束了");
+        } else if (res.data.code === 1003) {
+          this.$toast.center("该商品已经下架");
+        } else {
+          this.$toast.center("请重试");
+        }
+      });
+    },
   },
   mounted(){
-    // 初始化时拿到路由带来的参数idx,返回时带回，用于正确显示高亮的菜单
-    // （这是因为单页面进入时，菜单项初始化了）
-    let idx = this.$route.query.idx
-    this.idx = idx
+    this.getCartList()
+
+    // 分享
+    this.share(this.get2,this.wx)
   }
 }
 </script>
 
 <style>
 .cart_list{
-  margin:0 10px;
+  margin:0 10px 52px;
+  
+}
+.no_cartlist{
+  margin-top: 10px;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  background: white;
+  border-radius: 8px;
 }
 @media only screen and (max-width:320px){
   .cart_list{

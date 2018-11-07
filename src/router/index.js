@@ -6,28 +6,27 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/home',
-      alias:'/',
-      redirect:'/home/goods',
+      path: '/',
       name: 'Home',
-      meta: { 
-        keepAlive:true
-       },
-      component: () => import('@/pages/home/index'),
-      children:[
-        {
-          path:'/home/goods',
-          component: () => import('@/pages/home/goods')
-        },
-        {
-          path:'/home/order',
-          component: () => import('@/pages/home/order')
-        },
-        {
-          path:'/home/bind',
-          component: () => import('@/pages/home/bind')
-        }
-      ]
+      meta: {  
+        keepAlive:true // 标记这个路由，加上缓存
+      },
+      component: () => import('@/pages/home/index')
+    },
+    {
+      path: '/rule',
+      name: 'Rule',
+      component: () => import('@/pages/rule/index')
+    },
+    {
+      path: '/order',
+      name: 'Rule',
+      component: () => import('@/pages/order/index')
+    },
+    {
+      path: '/refund',
+      name: 'Rule',
+      component: () => import('@/pages/refund/index')
     },
     {
       path: '/cart',
@@ -35,9 +34,9 @@ export default new Router({
       component: () => import('@/pages/cart/index')
     },
     {
-      path: '/rule',
-      name: 'Rule',
-      component: () => import('@/pages/rule/index')
+      path:'/invite',
+      name: 'Invite',
+      component: () => import('@/pages/invite/index')
     }
   ]
 })

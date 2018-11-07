@@ -1,5 +1,5 @@
-import {get, post} from '../config/request'
-
+import {get,post} from '../config/request'
+import Cookie from 'js-cookie'
 
 function getQueryString(name) {
   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -23,10 +23,15 @@ var login = function () {
 var init = function () {
 
   if (code) {
-    get('/user/wx/login', {code: code, channel: channel}).then(res => {
-      console.log(res.data)
+    post('/user/wx/login', {code: code, channel: channel}).then(res => {
+      //console.log('init',res)
+      let data = res.data.data
+      console.log('data',data)
       // 存储到本地,用cookie加上前缀buy_h5_userid
-      // window.location.href = "/";
+       Cookie.set('buy_h5_userid',data.userid,{ expires: 7 })
+       Cookie.set('buy_h5_token',data.token,{ expires: 7 })
+       Cookie.set('buy_h5_timestamp',data.timestamp,{ expires: 7 })
+       window.location.href = "/";
     });
   } else {
     get('/user/info', {}).then(res => {

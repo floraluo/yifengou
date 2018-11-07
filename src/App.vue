@@ -14,8 +14,35 @@
 
   export default {
     name: 'App',
+    methods:{ 
+      // 页面初始化
+    initView(){ 
+      this.$get('/init').then(res=>{
+        console.log('init',res)
+        if (res.data.code === 200) {
+          // 序列化规则列表
+          let list = JSON.parse(res.data.data.text)
+          // 提交规则列表到vuex
+          this.$store.commit('addTextList',list)
+
+          // 提交bannerTopList到vuex
+          this.$store.commit('addBanner',res.data.data.bannerTopList)
+
+          // 提交邀请码到vuex
+          this.$store.commit('addInvite',res.data.data.invite)
+
+          // 判断是否有邀请码，没有的话跳转输入邀请码页面
+          let invite = res.data.data.invite
+          if (!invite) {
+            this.$router.push('/invite')
+          }
+        }
+      })
+    },
+    },
     mounted() {
       login.init();
+      this.initView()
     }
   }
 </script>
@@ -24,6 +51,9 @@
   body {
     margin: 0;
     background: #ec4e4f;
+  }
+  .router-link-exact-active{
+    color: #ec4e4f !important;
   }
 
   #app {

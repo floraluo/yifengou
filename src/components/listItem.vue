@@ -2,27 +2,53 @@
     <!-- 商品列表组件 -->
     <div class="list_item">
         <div class="goods_img">
-            <img src="http://img14.360buyimg.com/n1/jfs/t26941/123/1324560723/187593/bcea52d1/5bc6a088N94503c2c.png" alt="">
+            <img :src="pic">
         </div>
         <div class="goods_info">
-            <div class="goods_name">朴物大美（pwubeauty） PWU小苍兰香氛系列洗发水 无硅油去屑止痒含玻尿酸 锁水保湿持久留香 小苍兰洗发水90ml</div>
+            <div class="goods_name">{{name}}</div>
             <div class="goods_price">
-                <div class="now_price">¥9.9</div>
-                <div class="before_price">¥19.9</div>
+                <div class="now_price">¥{{couponPrice}}</div>
+                <div class="before_price">原价: ¥{{goodsPrice}}</div>
             </div>
             <div class="goods_coupon">
                 <div class='coupon_name'>券</div>
-                <div class='coupon_price'>¥10</div>
+                <div class='coupon_price'>¥{{discountPrice}}</div>
             </div>
         </div>
-        <i class="iconfont icon-add"></i>
+        <i class="iconfont icon-add" @click.stop="addCart(id)"></i>
     </div>
 </template>
 
 <script>
 export default {
+  props:{
+    id:Number,
+    pic:String,
+    name:String,
+    couponPrice:Number,
+    discountPrice:Number,
+    goodsPrice:Number
+  },
   data() {
     return {};
+  },
+  methods:{
+    addCart(id){
+      console.log(id)
+      this.$get('/cart/add',{id}).then(res=>{
+        console.log(res)
+        if (res.data.code === 200) {
+          // 获取购物车数量
+          let count = res.data.data
+          // 改变cartCount（购物车数量）
+          this.$store.commit('addCartCount',count)
+          
+          this.$toast.center('添加成功')
+        } else {
+          this.$toast.center('添加失败，请重试')
+        }
+      })
+    }
   }
 };
 </script>

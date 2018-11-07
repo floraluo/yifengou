@@ -3,48 +3,32 @@
     <!-- 下拉刷新 -->
     <div class="tip_text" v-if="showTip">{{tipText}}</div>
     <!-- 轮播 -->
-    <div class="home_swiper">
+    <div v-if="bannerTopList.length>1" class="home_swiper">
       <swiper :options="swiperOption">
-        <swiper-slide>
-          <img src="@/assets/image/banner.png">
+        <swiper-slide v-for="(item,index) in bannerTopList" :key="index">
+          <img :src="item">
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
     </div>
-    <!-- 三个步骤导航菜单 -->
-    <div class="home_nav">
-      <div @click="clickStep1">
-        <router-link tag="span" to="/home/goods">
-          <img v-show="idx===0" src="../../assets/image/1.1.png" />
-          <img v-show="idx!=0" src="../../assets/image/1.2.png" />
-        </router-link>
-      </div>
-      <div @click="clickStep2">
-        <router-link tag="span" to="/home/order">
-          <img v-show="idx===1" src="../../assets/image/2.1.png" />
-          <img v-show="idx!=1" src="../../assets/image/2.2.png" />
-        </router-link>
-      </div>
-      <div @click="clickStep3">
-        <router-link tag="span" to="/home/bind">
-          <img v-show="idx===2" src="../../assets/image/3.1.png" />
-          <img v-show="idx!=2" src="../../assets/image/3.2.png" />
-        </router-link>
-      </div>
+    <div v-if="bannerTopList.length===1" class="bannerTop">
+      <img :src="bannerTopList[0]">
     </div>
-    <!-- 一分购规则页面入口 -->
-    <div class="home_rule" @click="gotoRule(idx)">详见一分购规则>></div>
+    <!-- 商品部分 -->
+    <goods/>
+    <tabbar/>
     <!-- 悬浮购物车icon -->
     <div class="cart" @click="gotoCart">
       <i class='iconfont icon-cart'></i>
-      <span class='count'>10</span>
+      <span class='count'>{{cartCount}}</span>
     </div>
-    <!-- 子路由（三个步骤） -->
-    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import goods from './goods'
+import tabbar from '@/components/tabbar'
+import local from '@/config/storage'
 export default {
   data() {
     return {
@@ -62,8 +46,35 @@ export default {
         pagination: {
           el: ".swiper-pagination"
         }
-      }
+      },
+      scrollTop:0
     };
+  },
+  beforeRouteLeave (to, from, next) {
+    this.scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+    next()
+  },
+  components:{
+    goods,
+    tabbar
+  },
+  computed:{
+    // vuex状态里拿到购物车数量(此值在商品组件里改变，即listItem组件中，通过vuex通信简化操作)
+    cartCount:{
+      get(){
+        // 从vuex返回购物车数量
+        return this.$store.state.cartCount
+      },
+      set(val){
+        // 页面初始化时，将返回的购物车数量保存到vuex状态里
+        this.$store.commit('addCartCount',val)
+      }
+    }, 
+
+    // 从vuex中拿bannerTopList列表
+    bannerTopList(){
+      return this.$store.state.bannerTopList
+    }
   },
   methods: {
     // 菜单项的点击（通过下标控制显示）
@@ -75,6 +86,16 @@ export default {
     },
     clickStep3() {
       this.idx = 2;
+    },
+
+    // 获取购物车数量
+    getCartCount(){
+      this.$get('/cart/num').then(res=>{
+        console.log('购物车数量',res)
+        if (res.data.code === 200) {
+          this.cartCount = res.data.data
+        }
+      })
     },
 
     // 添加touch事件
@@ -131,25 +152,29 @@ export default {
       }
     },
 
-    // 去活动规则页面，带入当前高亮菜单的下标
+    // 去活动规则页面
     gotoRule() {
-      this.$router.push({ path: "/rule", query: { idx: this.idx } });
+      this.$router.push("/rule");
     },
-    // 去购物车列表页，带入当前高亮菜单的下标
+    // 去购物车列表页
     gotoCart() {
-      this.$router.push({ path: "/cart", query: { idx: this.idx } });
+      this.$router.push("/cart");
     }
   },
-  mounted() {
-    // 判断页面进入时是否带有idx参数，用于控制菜单显示
-    let idx = this.$route.query.idx;
-    if (idx === 0 || idx === 1 || idx === 2) {
-      this.idx = idx;
-    }
+  activated() {
+    // 购物车数量
+    this.getCartCount()
 
     // 获取home元素，添加touch事件，做下拉刷新
     this.el = document.querySelector(".home");
     this.bindTouchEvent();
+
+    // 分享
+    this.share(this.get2,this.wx)
+
+    // 页面恢复离开之前的位置
+  window.scrollTo(0,this.scrollTop)
+
   }
 };
 </script>
@@ -164,6 +189,14 @@ export default {
 .home_swiper {
   width: 100%;
   height: 180px;
+}
+.home .bannerTop{
+  width: 100%;
+  height: 180px;
+}
+.home .bannerTop img{
+  width: 100%;
+  height: 100%;
 }
 .home_swiper .swiper-container {
   margin: 0;
@@ -210,7 +243,7 @@ export default {
 .home .cart {
   z-index: 100;
   position: fixed;
-  bottom: 45px;
+  bottom: 55px;
   right: 25px;
   display: flex;
   justify-content: center;
