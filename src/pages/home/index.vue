@@ -251,7 +251,7 @@ export default {
 .home .cart {
   z-index: 100;
   position: fixed;
-  bottom: 55px;
+  bottom: 60px;
   right: 25px;
   display: flex;
   justify-content: center;
