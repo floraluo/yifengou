@@ -76,9 +76,8 @@ export default {
   },
   mounted(){
     this.getCartList()
-
     // 分享
-    this.share(this.get2,this.wx)
+    this.share(this.get2,this.wx,this.$store.state.shareImg)
   }
 }
 </script>
