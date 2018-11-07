@@ -27,7 +27,7 @@
 
 <script>
 import goods from './goods'
-import tabbar from '@/components/tabbar'
+import tabbar from '../../components/tabbar'
 import local from '@/config/storage'
 export default {
   data() {

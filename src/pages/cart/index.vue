@@ -21,7 +21,7 @@
 
 <script>
 import cartItem from '@/components/cartItem'
-import tabbar from '@/components/tabbar'
+import tabbar from '../../components/tabbar'
 export default {
   data(){
     return {
