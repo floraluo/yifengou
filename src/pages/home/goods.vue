@@ -240,7 +240,7 @@ export default {
 }
 @media only screen and (max-width: 320px) {
   .goods .rule_box {
-    margin: 0 5px;
+    margin: 10px 5px;
     padding: 8px;
   }
   .goods .rule_box span {

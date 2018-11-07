@@ -34,14 +34,15 @@
 </template>
 
 <script>
-import tabbar from '../../components/tabbar'
+import tabbar from "../../components/tabbar";
+import login from "../../module/login";
 export default {
   data() {
     return {
-      zfbUsername:'',
-      zfbAccount:'',
-      phone:'',
-      id:''
+      zfbUsername: "",
+      zfbAccount: "",
+      phone: "",
+      id: ""
     };
   },
   computed: {
@@ -58,54 +59,59 @@ export default {
   },
   methods: {
     // 保存用户信息
-    saveUserInfo(){
+    saveUserInfo() {
       if (!this.zfbUsername) {
-        this.$toast.center('真实姓名不能为空');
+        this.$toast.center("真实姓名不能为空");
         return;
       }
       if (!this.zfbAccount) {
-        this.$toast.center('支付宝账号不能为空');
+        this.$toast.center("支付宝账号不能为空");
         return;
       }
       if (!this.phone) {
-        this.$toast.center('手机号码不能为空');
+        this.$toast.center("手机号码不能为空");
         return;
       }
-      this.$post('/user/payinfo/save',{
-        zfbUsername:this.zfbUsername,
-        zfbAccount:this.zfbAccount,
-        phone:this.phone
-      }).then(res=>{
-        console.log(res)
-        if (res.data.code === 200){
-          this.$toast.center('保存成功')
+      this.$post("/user/payinfo/save", {
+        zfbUsername: this.zfbUsername,
+        zfbAccount: this.zfbAccount,
+        phone: this.phone
+      }).then(res => {
+        console.log(res);
+        if (res.data.code === 200) {
+          this.$toast.center("保存成功");
         }
-      })
+      });
     },
 
     // 获取用户信息
-    getUserInfo(){
-      this.$get('/user/info').then(res=>{
-        console.log('用户信息',res)
+    getUserInfo() {
+      this.$get("/user/info").then(res => {
+        console.log("用户信息", res);
         if (res.data.code === 200) {
-          this.zfbUsername = res.data.data.zfbUsername
-          this.zfbAccount = res.data.data.zfbAccount
-          this.phone = res.data.data.phone
-          this.id = res.data.data.id
+          this.zfbUsername = res.data.data.zfbUsername;
+          this.zfbAccount = res.data.data.zfbAccount;
+          this.phone = res.data.data.phone;
+          this.id = res.data.data.id;
         }
-      })
+      });
     }
   },
   mounted() {
-    // 判断是否有邀请码，没有就跳转填写页面
-   let invite = this.$store.state.invite
-   if (!invite) {
-     this.$router.push('/invite')
-   }
-   
-    this.getUserInfo();
-    // 分享
-    this.share(this.get2,this.wx,this.$store.state.shareImg)
+    var func = () => {
+      // 判断是否有邀请码，没有就跳转填写页面
+      let invite = this.$store.state.invite;
+      if (!invite) {
+        this.$router.push("/invite");
+      }
+
+      this.getUserInfo();
+      // 分享
+      this.share(this.get2, this.wx, this.$store.state.shareImg);
+    };
+
+    // 结果为true时再初始页面
+    login.checkInitData().then(func);
   }
 };
 </script>

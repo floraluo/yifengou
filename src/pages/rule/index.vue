@@ -13,6 +13,7 @@
 
 <script>
 import tabbar from '../../components/tabbar'
+import login from "../../module/login";
 export default {
   data(){
     return {
@@ -30,14 +31,18 @@ export default {
   methods:{
   },
   mounted(){
-    // 判断是否有邀请码，没有就跳转填写页面
+    var func = () => {
+      // 判断是否有邀请码，没有就跳转填写页面
    let invite = this.$store.state.invite
    if (!invite) {
      this.$router.push('/invite')
    }
-   
+
     // 分享
     this.share(this.get2,this.wx,this.$store.state.shareImg)
+    }
+    // 结果为true时再初始页面
+    login.checkInitData().then(func);
   }
 }
 </script>

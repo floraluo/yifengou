@@ -28,7 +28,7 @@
 <script>
 import goods from "./goods";
 import tabbar from "../../components/tabbar";
-import local from "@/config/storage";
+// import local from "@/config/storage";
 import login from "../../module/login";
 export default {
   data() {
@@ -131,7 +131,7 @@ export default {
       // 页面恢复离开之前的位置
       window.scrollTo(0, this.scrollTop);
     };
-    console.log("-------222");
+     // 结果为true时再初始页面
     login.checkInitData().then(func)
   }
 };
