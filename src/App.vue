@@ -17,6 +17,7 @@
     methods:{ 
       // 页面初始化
     initView(){ 
+      console.log('-------111')
       this.$get('/init').then(res=>{
         console.log('init',res)
         if (res.data.code === 200) {
@@ -37,12 +38,17 @@
 
           // 判断是否有邀请码，没有的话跳转输入邀请码页面
           console.log('App::',invite)
-          if (!invite) {
-            this.$router.push('/invite')
-          }else {
-            this.$router.push('/')
-          }
+          login.setInitData(1);
+          // if (!invite) {
+          //   this.$router.push('/invite')
+          // } else {
+          //   this.$router.push('/')
+          // }
+        }else{
+          login.setInitData(0);
         }
+      }).catch(()=>{
+        login.setInitData(0);
       })
     },
     },

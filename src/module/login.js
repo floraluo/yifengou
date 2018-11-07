@@ -44,6 +44,34 @@ var init = function () {
 
 };
 
+var initData = -1;
+
+var setInitData = (b)=>{
+  initData = b;
+}
+
+var checkInitData = ()=>{
+  return new Promise((resolve, reject) => {
+    var func = function(){
+      if(initData === 1){
+        resolve();
+      }
+      if(initData===-1){
+  setTimeout(() => {
+    func()
+  }, 10);
+      }
+      if(initData === 0){
+        reject();
+      }
+    }
+    func();
+    
+  });
+}
+
 export default {
-  init
+  init,
+  setInitData,
+  checkInitData
 }

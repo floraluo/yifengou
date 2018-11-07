@@ -15,8 +15,8 @@
       <img :src="bannerTopList[0]">
     </div>
     <!-- 商品部分 -->
-    <goods/>
-    <tabbar/>
+    <goods />
+    <tabbar />
     <!-- 悬浮购物车icon -->
     <div class="cart" @click="gotoCart">
       <i class='iconfont icon-cart'></i>
@@ -26,9 +26,10 @@
 </template>
 
 <script>
-import goods from './goods'
-import tabbar from '../../components/tabbar'
-import local from '@/config/storage'
+import goods from "./goods";
+import tabbar from "../../components/tabbar";
+import local from "@/config/storage";
+import login from "../../module/login";
 export default {
   data() {
     return {
@@ -47,33 +48,34 @@ export default {
           el: ".swiper-pagination"
         }
       },
-      scrollTop:0
+      scrollTop: 0
     };
   },
-  beforeRouteLeave (to, from, next) {
-    this.scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-    next()
+  beforeRouteLeave(to, from, next) {
+    this.scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    next();
   },
-  components:{
+  components: {
     goods,
     tabbar
   },
-  computed:{
+  computed: {
     // vuex状态里拿到购物车数量(此值在商品组件里改变，即listItem组件中，通过vuex通信简化操作)
-    cartCount:{
-      get(){
+    cartCount: {
+      get() {
         // 从vuex返回购物车数量
-        return this.$store.state.cartCount
+        return this.$store.state.cartCount;
       },
-      set(val){
+      set(val) {
         // 页面初始化时，将返回的购物车数量保存到vuex状态里
-        this.$store.commit('addCartCount',val)
+        this.$store.commit("addCartCount", val);
       }
-    }, 
+    },
 
     // 从vuex中拿bannerTopList列表
-    bannerTopList(){
-      return this.$store.state.bannerTopList
+    bannerTopList() {
+      return this.$store.state.bannerTopList;
     }
   },
   methods: {
@@ -89,68 +91,14 @@ export default {
     },
 
     // 获取购物车数量
-    getCartCount(){
-      this.$get('/cart/num').then(res=>{
-        console.log('购物车数量',res)
+    getCartCount() {
+      this.$get("/cart/num").then(res => {
+        console.log("购物车数量", res);
         if (res.data.code === 200) {
-          this.cartCount = res.data.data
+          this.cartCount = res.data.data;
         }
-      })
+      });
     },
-
-    // 添加touch事件
-    // bindTouchEvent() {
-    //   this.el.addEventListener("touchstart", this.touchStart);
-    //   this.el.addEventListener("touchmove", this.touchMove);
-    //   this.el.addEventListener("touchend", this.touchEnd);
-    // },
-
-    //开始下拉监听
-    // touchStart(e) {
-    //   let touch = e.changedTouches[0];
-    //   this.tipText = "下拉刷新";
-    //   this.startX = touch.clientX;
-    //   this.startY = touch.clientY;
-    // },
-    // 开始监听移动
-    // touchMove(e) {
-    //   let touch = e.changedTouches[0];
-    //   // 获取下拉举例
-    //   let move = touch.clientY - this.startY;
-    //   // 当 0<move<100 时，显示下拉区内容
-    //   if (move > 0 && move < 80) {
-    //     this.showTip = true;
-    //     this.el.style.marginTop = move + "px";
-    //     //记录下拉的距离
-    //     this.moveDistance = touch.clientY - this.startY;
-    //     if (move > 40) {
-    //       this.tipText = "松开刷新";
-    //     }
-    //   }
-    // },
-
-    // 监听移动结束（手指松开）
-    // touchEnd(e) {
-    //   let touch = e.changedTouches[0];
-    //   if (this.moveDistance > 50) {
-    //     this.tipText = "刷新中...";
-    //     setTimeout(()=>{
-    //       this.resetBox()
-    //     },2000)
-    //   }
-    // },
-
-    // 重置界面（下拉刷新恢复）
-    // resetBox() {
-    //   this.showTip = false
-    //   if (this.moveDistance > 0) {
-    //     let timer = setInterval(()=> {
-    //       this.el.style.marginTop = --this.moveDistance + "px";
-    //       if (Number(this.el.style.marginTop.split("px")[0]) <= 0)
-    //         clearInterval(timer);
-    //     }, 1);
-    //   }
-    // },
 
     // 去活动规则页面
     gotoRule() {
@@ -162,27 +110,29 @@ export default {
     }
   },
   activated() {
-    // 判断是否有邀请码，没有就跳转填写页面
-   let invite = this.$store.state.invite
-   console.log(invite)
-   if (!invite) {
-     this.$router.push('/invite')
-   }
+    var func = () => {
+      // 判断是否有邀请码，没有就跳转填写页面
+      let invite = this.$store.state.invite;
+      console.log(invite);
+      if (!invite) {
+        this.$router.push("/invite");
+      }
 
-    // 购物车数量
-    this.getCartCount()
+      // 购物车数量
+      this.getCartCount();
 
-    // 获取home元素，添加touch事件，做下拉刷新
-    // this.el = document.querySelector(".home");
-    // this.bindTouchEvent();
+      // 获取home元素，添加touch事件，做下拉刷新
+      // this.el = document.querySelector(".home");
+      // this.bindTouchEvent();
 
-    // 分享
-    this.share(this.get2,this.wx,this.$store.state.shareImg)
+      // 分享
+      this.share(this.get2, this.wx, this.$store.state.shareImg);
 
-    // 页面恢复离开之前的位置
-   window.scrollTo(0,this.scrollTop)
-
-
+      // 页面恢复离开之前的位置
+      window.scrollTo(0, this.scrollTop);
+    };
+    console.log("-------222");
+    login.checkInitData().then(func)
   }
 };
 </script>
@@ -198,11 +148,11 @@ export default {
   width: 100%;
   height: 180px;
 }
-.home .bannerTop{
+.home .bannerTop {
   width: 100%;
   height: 180px;
 }
-.home .bannerTop img{
+.home .bannerTop img {
   width: 100%;
   height: 100%;
 }
