@@ -51,7 +51,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: 'http://dl.buy.51zhuanfan.com/free/h5',
+    assetsPublicPath: 'http://dl.buy.51zhuanfan.com/free/h5/',
 
     /**
      * Source Maps
