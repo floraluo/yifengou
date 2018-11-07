@@ -10,7 +10,8 @@ let state = {
     ruleList:[], // 规则页面的说明
     bindList:[], // 返现（绑定）页面规则
     bannerTopList:[], // bannerTopList列表,初始值为空数组
-    invite: null // 邀请码
+    invite: null, // 邀请码
+    shareImg:''
 }
 export default new Vuex.Store({
     state,

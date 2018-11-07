@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <!-- 下拉刷新 -->
-    <div class="tip_text" v-if="showTip">{{tipText}}</div>
+    <!-- <div class="tip_text" v-if="showTip">{{tipText}}</div> -->
     <!-- 轮播 -->
     <div v-if="bannerTopList.length>1" class="home_swiper">
       <swiper :options="swiperOption">
@@ -33,12 +33,12 @@ export default {
   data() {
     return {
       idx: 0, // 根据下标控制菜单项显示,
-      el: null, // 下拉元素（mounted中初始）
-      startX: 0, // 开始下拉的位置x
-      startY: 0, // 开始下拉的位置y
-      tipText: "下拉刷新", // 下拉刷新提示文字
-      showTip: false, // 是否显示下拉刷新提示文字
-      moveDistance: 0, // 下拉的距离
+      //el: null, // 下拉元素（mounted中初始）
+      //startX: 0, // 开始下拉的位置x
+      //startY: 0, // 开始下拉的位置y
+      //tipText: "下拉刷新", // 下拉刷新提示文字
+      //showTip: false, // 是否显示下拉刷新提示文字
+      //moveDistance: 0, // 下拉的距离
       swiperOption: {
         // 轮播图控制项（参考swiper4）
         autoplay: false,
@@ -99,58 +99,58 @@ export default {
     },
 
     // 添加touch事件
-    bindTouchEvent() {
-      this.el.addEventListener("touchstart", this.touchStart);
-      this.el.addEventListener("touchmove", this.touchMove);
-      this.el.addEventListener("touchend", this.touchEnd);
-    },
+    // bindTouchEvent() {
+    //   this.el.addEventListener("touchstart", this.touchStart);
+    //   this.el.addEventListener("touchmove", this.touchMove);
+    //   this.el.addEventListener("touchend", this.touchEnd);
+    // },
 
     //开始下拉监听
-    touchStart(e) {
-      let touch = e.changedTouches[0];
-      this.tipText = "下拉刷新";
-      this.startX = touch.clientX;
-      this.startY = touch.clientY;
-    },
+    // touchStart(e) {
+    //   let touch = e.changedTouches[0];
+    //   this.tipText = "下拉刷新";
+    //   this.startX = touch.clientX;
+    //   this.startY = touch.clientY;
+    // },
     // 开始监听移动
-    touchMove(e) {
-      let touch = e.changedTouches[0];
-      // 获取下拉举例
-      let move = touch.clientY - this.startY;
-      // 当 0<move<100 时，显示下拉区内容
-      if (move > 0 && move < 80) {
-        this.showTip = true;
-        this.el.style.marginTop = move + "px";
-        //记录下拉的距离
-        this.moveDistance = touch.clientY - this.startY;
-        if (move > 40) {
-          this.tipText = "松开刷新";
-        }
-      }
-    },
+    // touchMove(e) {
+    //   let touch = e.changedTouches[0];
+    //   // 获取下拉举例
+    //   let move = touch.clientY - this.startY;
+    //   // 当 0<move<100 时，显示下拉区内容
+    //   if (move > 0 && move < 80) {
+    //     this.showTip = true;
+    //     this.el.style.marginTop = move + "px";
+    //     //记录下拉的距离
+    //     this.moveDistance = touch.clientY - this.startY;
+    //     if (move > 40) {
+    //       this.tipText = "松开刷新";
+    //     }
+    //   }
+    // },
 
     // 监听移动结束（手指松开）
-    touchEnd(e) {
-      let touch = e.changedTouches[0];
-      if (this.moveDistance > 50) {
-        this.tipText = "刷新中...";
-        setTimeout(()=>{
-          this.resetBox()
-        },2000)
-      }
-    },
+    // touchEnd(e) {
+    //   let touch = e.changedTouches[0];
+    //   if (this.moveDistance > 50) {
+    //     this.tipText = "刷新中...";
+    //     setTimeout(()=>{
+    //       this.resetBox()
+    //     },2000)
+    //   }
+    // },
 
     // 重置界面（下拉刷新恢复）
-    resetBox() {
-      this.showTip = false
-      if (this.moveDistance > 0) {
-        let timer = setInterval(()=> {
-          this.el.style.marginTop = --this.moveDistance + "px";
-          if (Number(this.el.style.marginTop.split("px")[0]) <= 0)
-            clearInterval(timer);
-        }, 1);
-      }
-    },
+    // resetBox() {
+    //   this.showTip = false
+    //   if (this.moveDistance > 0) {
+    //     let timer = setInterval(()=> {
+    //       this.el.style.marginTop = --this.moveDistance + "px";
+    //       if (Number(this.el.style.marginTop.split("px")[0]) <= 0)
+    //         clearInterval(timer);
+    //     }, 1);
+    //   }
+    // },
 
     // 去活动规则页面
     gotoRule() {
@@ -166,8 +166,8 @@ export default {
     this.getCartCount()
 
     // 获取home元素，添加touch事件，做下拉刷新
-    this.el = document.querySelector(".home");
-    this.bindTouchEvent();
+    // this.el = document.querySelector(".home");
+    // this.bindTouchEvent();
 
     // 分享
     this.share(this.get2,this.wx)

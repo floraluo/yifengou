@@ -31,6 +31,9 @@
           // 提交邀请码到vuex
           this.$store.commit('addInvite',res.data.data.invite)
 
+          // 提交分享图片到vuex
+          this.$store.commit('addShareImg',res.data.data.shareImage)
+
           // 判断是否有邀请码，没有的话跳转输入邀请码页面
           let invite = res.data.data.invite
           if (!invite) {

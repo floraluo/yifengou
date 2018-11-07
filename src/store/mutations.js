@@ -23,5 +23,10 @@ export default {
   // 添加邀请码
   addInvite(state,invite){
       state.invite = invite
+  },
+
+  // 添加分享图片
+  addShareImg(state,img){
+    state.shareImg = img
   }
 };

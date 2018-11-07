@@ -1,7 +1,7 @@
 <template>
   <div class="order">
-    <!-- 下拉刷新 -->
-    <div class="tip_text" v-if="showTip">{{tipText}}</div>
+    <!-- 下拉刷新
+    <div class="tip_text" v-if="showTip">{{tipText}}</div> -->
     <div class="order_detail">
       <div class="title">预估有效订单</div>
       <div class="subtitle">已付款并符合活动规则的订单</div>
@@ -35,14 +35,7 @@ export default {
     return {
       orderCount:0,
       allMoney:0,
-      orderList:[],
-
-      el: null, // 下拉元素（mounted中初始）
-      startX: 0, // 开始下拉的位置x
-      startY: 0, // 开始下拉的位置y
-      tipText: "下拉刷新", // 下拉刷新提示文字
-      showTip: false, // 是否显示下拉刷新提示文字
-      moveDistance: 0, // 下拉的距离
+      orderList:[]
     };
   },
   components:{
@@ -59,72 +52,12 @@ export default {
           this.orderList = res.data.data.list
         }
       })
-    },
-
-    // 添加touch事件
-    bindTouchEvent() {
-      this.el.addEventListener("touchstart", this.touchStart);
-      this.el.addEventListener("touchmove", this.touchMove);
-      this.el.addEventListener("touchend", this.touchEnd);
-    },
-
-    //开始下拉监听
-    touchStart(e) {
-      let touch = e.changedTouches[0];
-      this.tipText = "下拉刷新";
-      this.startX = touch.clientX;
-      this.startY = touch.clientY;
-    },
-    // 开始监听移动
-    touchMove(e) {
-      let touch = e.changedTouches[0];
-      // 获取下拉举例
-      let move = touch.clientY - this.startY;
-      // 当 0<move<100 时，显示下拉区内容
-      if (move > 0 && move < 80) {
-        this.showTip = true;
-        this.el.style.marginTop = move + "px";
-        //记录下拉的距离
-        this.moveDistance = touch.clientY - this.startY;
-        if (move > 40) {
-          this.tipText = "松开刷新";
-        }
-      }
-    },
-
-    // 监听移动结束（手指松开）
-    touchEnd(e) {
-      let touch = e.changedTouches[0];
-      if (this.moveDistance > 50) {
-        this.tipText = "刷新中...";
-        this.getOrderInfo()
-        setTimeout(()=>{
-          this.resetBox()
-        },1000)
-        
-      }
-    },
-
-    // 重置界面（下拉刷新恢复）
-    resetBox() {
-      this.showTip = false
-      if (this.moveDistance > 0) {
-        let timer = setInterval(()=> {
-          this.el.style.marginTop = --this.moveDistance + "px";
-          if (Number(this.el.style.marginTop.split("px")[0]) <= 0)
-            clearInterval(timer);
-        }, 1);
-      }
-    },
+    }
   },
   mounted(){
     this.getOrderInfo()
     // 分享
     this.share(this.get2,this.wx)
-
-    // 获取home元素，添加touch事件，做下拉刷新
-    this.el = document.querySelector(".order");
-    this.bindTouchEvent();
   }
 };
 </script>
