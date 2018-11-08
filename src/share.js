@@ -1,4 +1,4 @@
-let share = (get, wx) => {
+let share = (get, wx,shareImg) => {
   // share.js改写版
   var chars = [
     "0",
@@ -78,7 +78,7 @@ let share = (get, wx) => {
       console.log("验证失败：", res);
     });
     wx.ready(function() {
-      var imgurl = "http://dl.buy.51zhuanfan.com/res/20181025/image/banner.png";
+      var imgurl = shareImg;
       var title = "点我优惠购";
       var desc = "千万爆品，一分抄底；全民嗨购，狂欢24小时。";
       wx.onMenuShareTimeline({
