@@ -69,7 +69,7 @@ export default {
       this.$get('/init').then(res=>{
         console.log('init',res)
         if (res.data.code === 200) {
-          if (!res.data.data.invite){
+          if (!res.data.data.showInvite){
             this.$router.push("/invite");
           } else {
             this.getCartList();
