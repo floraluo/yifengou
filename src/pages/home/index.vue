@@ -149,6 +149,10 @@ export default {
      // 结果为true时再初始页面
     //login.checkInitData().then(func)
   },
+
+  mounted(){
+    this.initView()
+  }
 };
 </script>
 

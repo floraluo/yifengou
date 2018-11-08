@@ -18,9 +18,9 @@
     </div>
     <div class="goods_list">
       <list-item v-for="(item,index) in goodsList" @click.native="goBuy(item.id)" :key="index" :id="item.id" :pic="item.goodsImg" :name="item.goodsContent" :couponPrice="item.couponPrice" :discountPrice="item.discountPrice" :goodsPrice="item.goodsPrice" />
-        <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="20">
-          <div class="bottom_tip" @click="updateGoods">{{bootomText}}</div>
-        </div>
+      <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="20">
+        <div class="bottom_tip" @click="updateGoods">{{bootomText}}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -39,7 +39,7 @@ export default {
       goodsType: 0, // 请求商品类型，页面初始为0，即全部商品,
       goodsListHasMore: false, // 商品是否还有下一页
       goodsList: null, // 商品列表
-      busy: false, // 如果该属性的值为true，则会禁用无限滚动
+      busy: false // 如果该属性的值为true，则会禁用无限滚动
     };
   },
   components: {
@@ -50,14 +50,14 @@ export default {
   //   local.localType.set(goodsType)
   //   next()
   // },
-  computed:{
+  computed: {
     // 上拉加载底部提示文字
-    bootomText(){
-      return this.goodsListHasMore? '加载数据中...' : '换一批'
+    bootomText() {
+      return this.goodsListHasMore ? "加载数据中..." : "换一批";
     },
     // 规则说明
-    indexList(){
-      return this.$store.state.indexList
+    indexList() {
+      return this.$store.state.indexList;
     }
   },
   methods: {
@@ -81,7 +81,7 @@ export default {
           } else {
             if (res.data.data.link) {
               console.log(res.data.data.link);
-              window.location.href = res.data.data.link
+              window.location.href = res.data.data.link;
             }
           }
         } else if (res.data.code === 1001) {
@@ -105,7 +105,7 @@ export default {
         console.log(res);
         let data = res.data.data;
         // 更新navlist
-        this.navList = this.navList.length ? this.navList : data.typeList || [];
+        this.navList = this.navList.length ? this.navList : (data.typeList || []);
         // 商品是否还有下一页
         this.goodsListHasMore = data.hasMore;
 
@@ -134,12 +134,12 @@ export default {
       this.goodsList = [];
       this.lastId = 0;
       this.getGoodsData();
-      window.scrollTo(0,0)
+      window.scrollTo(0, 0);
     },
 
     // 去订单页面
-    gotoOrder(){  
-      this.$router.push('/order')
+    gotoOrder() {
+      this.$router.push("/order");
     },
     // scroll初始化
     initTabScroll() {
@@ -177,7 +177,7 @@ export default {
   border: 2px solid #ffde37;
   padding: 10px 10px 10px 8px;
   border-radius: 10px;
-  margin:10px;
+  margin: 10px;
 }
 .goods .rule_box span {
   font-size: 14px;
