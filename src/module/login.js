@@ -12,7 +12,7 @@ var channel = getQueryString("c");
 var code = getQueryString("code");
 
 var url =
-  "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf9fbb515384aa6c0" +
+  "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf0f511ae22ff266c" +
   "&redirect_uri=http%3A%2F%2Fbuy.51zhuanfan.com%3Fc%3D" +
   channel +
   "&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";

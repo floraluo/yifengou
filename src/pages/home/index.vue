@@ -1,7 +1,7 @@
 <template>
 <div>
   <div v-if="!invite" style="color:white;text-align:center;padding-top:10px;">数据加载中</div>
-  <div v-if="invite" class="home" >
+  <div class="home" >
     <!-- 下拉刷新 -->
     <!-- <div class="tip_text" v-if="showTip">{{tipText}}</div> -->
     <!-- 轮播 -->
