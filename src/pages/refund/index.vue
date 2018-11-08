@@ -108,7 +108,7 @@ export default {
 
     initView() {
       this.$get("/init").then(res => {
-        console.log("init", res);
+        console.log("refund-init", res);
         if (res.data.code === 200) {
           if (res.data.data.showInvite) {
             this.$router.push("/invite");
@@ -117,6 +117,7 @@ export default {
             let list = JSON.parse(res.data.data.text)
             this.bindList = list.bind_list
             this.invite = res.data.data.invite
+            console.log('refund>>>>>>',this.bindList,this.invite)
           }
         }
       });

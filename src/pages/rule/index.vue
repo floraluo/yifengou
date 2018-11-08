@@ -31,7 +31,7 @@ export default {
   methods:{
     initView(){
       this.$get('/init').then(res=>{
-        console.log('init',res)
+        console.log('rule-init',res)
         if (res.data.code === 200) {
           if (res.data.data.showInvite){
             this.$router.push("/invite");
