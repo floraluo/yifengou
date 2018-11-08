@@ -266,7 +266,7 @@ body {
 @media only screen and (max-width:320px){
 .list_item .goods_info .goods_name{
         font-size: 14px;
-        height: 30px;
+        height: 35px;
 }
 }
 .list_item .goods_info .goods_price {
@@ -679,7 +679,7 @@ body {
 @media only screen and (max-width: 320px) {
 .list_item .goods_info .goods_name {
     font-size: 14px;
-    height: 30px;
+    height: 35px;
 }
 }
 .list_item .goods_info .goods_price {
@@ -2114,4 +2114,4 @@ button.swiper-pagination-bullet {
         opacity: 0.895958333333333;
     }
 }
-/*# sourceMappingURL=app.f6988f520eddb76e6548624776b3c0fe.css.map*/
+/*# sourceMappingURL=app.3b8b8d5385cf95f07bdb5826990af0a9.css.map*/

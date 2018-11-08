@@ -97,7 +97,7 @@ export default {
 @media only screen and (max-width:320px){
     .list_item .goods_info .goods_name{
         font-size: 14px;
-        height: 30px;
+        height: 35px;
     }
 }
 .list_item .goods_info .goods_price {
