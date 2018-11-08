@@ -85,7 +85,7 @@ export default {
 }
 .list_item .goods_info .goods_name {
   width: 100%;
-  height: 42px;
+  height: 40px;
   box-sizing: border-box;
   padding-left: 10px;
   overflow: hidden;
@@ -97,7 +97,7 @@ export default {
 @media only screen and (max-width:320px){
     .list_item .goods_info .goods_name{
         font-size: 14px;
-        height: 40px;
+        height: 35px;
     }
 }
 .list_item .goods_info .goods_price {
