@@ -151,7 +151,7 @@ export default {
       let width = 0;
       for (let i = 0; i < this.navList.length; i++) {
         // width += this.$refs.navitem[1].getBoundingClientRect().width;
-        width += 70;
+        width += 75;
       }
       this.$refs.navlist.style.width = width + "px";
       this.$nextTick(() => {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="!id" style="color:white;text-align:center;padding-top:10px;">数据加载中...</div>
-    <div v-if="id"  class="bind">
+    <div class="bind">
     <div class="invite_code">
       <div class="tip">
         邀请码<span>{{invite}}</span>
