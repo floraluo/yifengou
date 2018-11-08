@@ -15,7 +15,7 @@
       <img :src="bannerTopList[0]">
     </div>
     <!-- 商品部分 -->
-    <goods :indexList="indexList" />
+    <goods/>
     <tabbar />
     <!-- 悬浮购物车icon -->
     <div class="cart" @click="gotoCart">
@@ -42,9 +42,7 @@ export default {
           el: ".swiper-pagination"
         }
       },
-      scrollTop: 0,
-      bannerTopList:[],
-      indexList:[]
+      scrollTop: 0
     };
   },
   beforeRouteLeave(to, from, next) {
@@ -74,9 +72,9 @@ export default {
     },
 
     // 从vuex中拿bannerTopList列表
-    // bannerTopList() {
-    //   return this.$store.state.bannerTopList;
-    // }
+    bannerTopList() {
+      return this.$store.state.bannerTopList;
+    }
   },
   methods: {
     // 菜单项的点击（通过下标控制显示）
@@ -96,7 +94,6 @@ export default {
         console.log("购物车数量", res);
         if (res.data.code === 200) {
           this.cartCount = res.data.data;
-          this.$loading.close()
         }
       });
     },
@@ -111,7 +108,6 @@ export default {
     },
 
      initView(){
-      this.$loading('正在加载数据...')
       this.$get('/init').then(res=>{
         console.log('home-init',res)
         if (res.data.code === 200) {
@@ -119,10 +115,6 @@ export default {
             this.$router.push("/invite");
           } else {
             this.getCartCount();
-            this.share(this.get2, this.wx, res.data.data.shareImage);
-            let list = JSON.parse(res.data.data.text)
-            this.indexList = list.index_list
-            this.bannerTopList = res.data.data.bannerTopList
           }
         }
       })
@@ -135,7 +127,7 @@ export default {
       //this.getCartCount();
 
       // 分享
-      //this.share(this.get2, this.wx, this.$store.state.shareImg);
+      this.share(this.get2, this.wx, this.$store.state.shareImg);
 
       // 页面恢复离开之前的位置
       window.scrollTo(0, local.localScroll.get());

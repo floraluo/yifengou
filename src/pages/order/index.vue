@@ -63,7 +63,6 @@ export default {
             this.$router.push("/invite");
           } else {
             this.getOrderInfo();
-            this.share(this.get2, this.wx, res.data.data.shareImage);
           }
         }
       })
@@ -73,7 +72,7 @@ export default {
      this.initView()
 
       // 分享
-      //this.share(this.get2, this.wx, this.$store.state.shareImg);
+      this.share(this.get2, this.wx, this.$store.state.shareImg);
   }
 };
 </script>

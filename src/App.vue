@@ -16,34 +16,34 @@
     name: 'App',
     methods:{ 
       // 页面初始化
-      // initView(){ 
-      //   console.log('-------111')
-      //   this.$get('/init').then(res=>{
-      //     console.log('init',res)
-      //     if (res.data.code === 200) {
-      //       // 序列化规则列表
-      //       let list = JSON.parse(res.data.data.text)
-      //       // 提交规则列表到vuex
-      //       this.$store.commit('addTextList',list)
+      initView(){ 
+        console.log('-------111')
+        this.$get('/init').then(res=>{
+          console.log('init',res)
+          if (res.data.code === 200) {
+            // 序列化规则列表
+            let list = JSON.parse(res.data.data.text)
+            // 提交规则列表到vuex
+            this.$store.commit('addTextList',list)
 
-      //       // 提交bannerTopList到vuex
-      //       this.$store.commit('addBanner',res.data.data.bannerTopList)
+            // 提交bannerTopList到vuex
+            this.$store.commit('addBanner',res.data.data.bannerTopList)
 
-      //       // 提交邀请码到vuex
-      //       let invite = res.data.data.invite
-      //       this.$store.commit('addInvite',invite)
+            // 提交邀请码到vuex
+            let invite = res.data.data.invite
+            this.$store.commit('addInvite',invite)
 
-      //       // 提交分享图片到vuex
-      //       this.$store.commit('addShareImg',res.data.data.shareImage)
+            // 提交分享图片到vuex
+            this.$store.commit('addShareImg',res.data.data.shareImage)
             
-      //       //login.setInitData(1);
-      //     }
-      //   })
-      // }
+            //login.setInitData(1);
+          }
+        })
+      }
     },
     mounted() {
       login.init();
-      //this.initView()
+      this.initView()
     }
   }
 </script>

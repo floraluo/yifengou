@@ -42,20 +42,17 @@ export default {
       zfbUsername: "",
       zfbAccount: "",
       phone: "",
-      id: "",
-
-      bindList:[],
-      invite:''
+      id: ""
     };
   },
   computed: {
-    // bindList() {
-    //   return this.$store.state.bindList;
-    // },
+    bindList() {
+      return this.$store.state.bindList;
+    },
     // 邀请码
-    // invite() {
-    //   return this.$store.state.invite;
-    // }
+    invite() {
+      return this.$store.state.invite;
+    }
   },
   components: {
     tabbar
@@ -108,10 +105,6 @@ export default {
             this.$router.push("/invite");
           } else {
             this.getUserInfo();
-            let list = JSON.parse(res.data.data.text)
-            this.bindList = list.bind_list
-            this.invite = res.data.data.invite
-            this.share(this.get2, this.wx, res.data.data.shareImage);
           }
         }
       })
@@ -124,7 +117,7 @@ export default {
     //this.getUserInfo();
 
       // 分享
-      //this.share(this.get2, this.wx, this.$store.state.shareImg);
+      this.share(this.get2, this.wx, this.$store.state.shareImg);
 
 
     // 结果为true时再初始页面

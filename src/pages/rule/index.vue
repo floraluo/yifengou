@@ -17,16 +17,15 @@ import login from "../../module/login";
 export default {
   data(){
     return {
-      ruleList:[]
     }
   },
   components:{
     tabbar
   },
   computed:{
-    // ruleList(){
-    //   return this.$store.state.ruleList
-    // }
+    ruleList(){
+      return this.$store.state.ruleList
+    }
   },
   methods:{
     initView(){
@@ -35,10 +34,6 @@ export default {
         if (res.data.code === 200) {
           if (!res.data.data.invite){
             this.$router.push("/invite");
-          } else {
-            let list = JSON.parse(res.data.data.text)
-            this.ruleList = list.rule_list
-            this.share(this.get2,this.wx,res.data.data.shareImage)
           }
         }
       })
@@ -55,7 +50,7 @@ export default {
   //  }
 
     // 分享
-    //this.share(this.get2,this.wx,this.$store.state.shareImg)
+    this.share(this.get2,this.wx,this.$store.state.shareImg)
 
     // 结果为true时再初始页面
     //login.checkInitData().then(func);
