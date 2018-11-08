@@ -36,12 +36,8 @@
           // 提交分享图片到vuex
           this.$store.commit('addShareImg',res.data.data.shareImage)
           
-          login.setInitData(1);
-        }else{
-          login.setInitData(0);
+          //login.setInitData(1);
         }
-      }).catch(()=>{
-        login.setInitData(0);
       })
     },
     },
