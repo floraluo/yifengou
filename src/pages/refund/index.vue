@@ -131,7 +131,7 @@ export default {
 
 .bind .tip {
   position: relative;
-  margin-left: 20px;
+  margin-left: 15px;
   display: flex;
   align-items: center;
 }

@@ -50,6 +50,7 @@ export default {
           } else {
             if (res.data.data.link) {
               console.log(res.data.data.link);
+              window.location.href = res.data.data.link
             }
           }
         } else if (res.data.code === 1001) {

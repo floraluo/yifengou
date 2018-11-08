@@ -5,7 +5,7 @@
             <img :src="pic">
         </div>
         <div class="goods_info">
-            <div class="goods_name">{{name}}</div>
+            <div class="goods_name" style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{name}}</div>
             <div class="goods_price">
                 <div class="now_price">¥{{couponPrice}}</div>
                 <div class="before_price">原价: ¥{{goodsPrice}}</div>
@@ -86,11 +86,10 @@ export default {
 .list_item .goods_info .goods_name {
   width: 100%;
   height: 42px;
+  box-sizing: border-box;
+  padding-left: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 }
 @media only screen and (max-width:320px){
     .list_item .goods_info .goods_name{
@@ -101,6 +100,8 @@ export default {
 .list_item .goods_info .goods_price {
   display: flex;
   align-items: center;
+  box-sizing: border-box;
+  padding-left: 10px;
 }
 .goods_info .goods_price .now_price {
   font-size: 32rpx;
@@ -118,7 +119,9 @@ export default {
   height: 25px;
   line-height: 25px;
   margin-bottom: 4px;
+  margin-left: 10px;
   text-align: center;
+  box-sizing: border-box;
   border: 1px solid #ec4e4f;
   border-radius: 5px;
   color: #ec4e4f;

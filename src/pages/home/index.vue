@@ -57,7 +57,7 @@ export default {
        document.documentElement.scrollTop || document.body.scrollTop;
     
     // 将滚动距离也保存一份到本地，用于京东跳回使用
-    local.set(this.scrollTop)
+    local.localScroll.set(this.scrollTop)
     next();
   },
   components: {
@@ -122,6 +122,8 @@ export default {
         this.$router.push("/invite");
       }
 
+      // 取本地存储的goodsType
+
       // 购物车数量
       this.getCartCount();
 
@@ -129,7 +131,7 @@ export default {
       this.share(this.get2, this.wx, this.$store.state.shareImg);
 
       // 页面恢复离开之前的位置
-      window.scrollTo(0, local.get());
+      window.scrollTo(0, local.localScroll.get());
     };
      // 结果为true时再初始页面
     login.checkInitData().then(func)

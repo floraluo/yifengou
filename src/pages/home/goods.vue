@@ -27,6 +27,7 @@
 
 <script>
 import BScroll from "better-scroll";
+//import local from "@/config/storage";
 import listItem from "@/components/listItem";
 export default {
   data() {
@@ -44,6 +45,11 @@ export default {
   components: {
     listItem
   },
+  // beforeRouteLeave(to, from, next){
+  //   console.log('离开goods')
+  //   local.localType.set(goodsType)
+  //   next()
+  // },
   computed:{
     // 上拉加载底部提示文字
     bootomText(){
