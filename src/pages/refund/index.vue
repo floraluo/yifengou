@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!showRefund" style="color:white;text-align:center;padding-top:10px;">数据加载中...</div>
+    <!-- <div v-if="!showRefund" style="color:white;text-align:center;padding-top:10px;">数据加载中...</div> -->
     <div class="bind" v-if="showRefund">
       <div class="invite_code">
         <div class="tip">

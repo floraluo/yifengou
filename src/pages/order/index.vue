@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!showOrder" style="color:white;text-align:center;padding-top:10px;">数据加载中...</div>
+    <!-- <div v-if="!showOrder" style="color:white;text-align:center;padding-top:10px;">数据加载中...</div> -->
     <div class="order" v-if="showOrder">
       <!-- 下拉刷新
     <div class="tip_text" v-if="showTip">{{tipText}}</div> -->
