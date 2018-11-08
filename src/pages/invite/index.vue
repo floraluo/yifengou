@@ -46,9 +46,13 @@ export default {
 <style>
 .invite_code_box{
     display: flex;
+    position:fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     flex-direction: column;
     justify-content: space-between;
-    height: 100vh;
     background: white;
 }
 .invite_code_box .topImg{
