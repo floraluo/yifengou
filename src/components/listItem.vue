@@ -85,7 +85,7 @@ export default {
 }
 .list_item .goods_info .goods_name {
   width: 100%;
-  height: 40px;
+  height: 35px;
   box-sizing: border-box;
   padding-left: 10px;
   overflow: hidden;
