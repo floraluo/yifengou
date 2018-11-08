@@ -116,6 +116,20 @@ export default {
             this.$router.push("/invite");
           } else {
             this.getCartCount();
+            // 序列化规则列表
+            let list = JSON.parse(res.data.data.text)
+            // 提交规则列表到vuex
+            this.$store.commit('addTextList',list)
+
+            // 提交bannerTopList到vuex
+            this.$store.commit('addBanner',res.data.data.bannerTopList)
+
+            // 提交邀请码到vuex
+            let invite = res.data.data.invite
+            this.$store.commit('addInvite',invite)
+
+            // 提交分享图片到vuex
+            this.$store.commit('addShareImg',res.data.data.shareImage)
           }
         }
       })

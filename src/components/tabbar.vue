@@ -2,7 +2,7 @@
     <div class="tabbar">
         <ul>
             <router-link tag="li" to="/">
-                <i class="iconfont icon-goods"></i>
+                <i class="iconfont icon-gouwu"></i>
                 <span class="type">商品</span>
             </router-link>
             <router-link tag="li" to="/rule">
