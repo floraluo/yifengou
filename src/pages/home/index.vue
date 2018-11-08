@@ -135,8 +135,8 @@ export default {
       //this.getCartCount();
 
       // 分享
-      this.share(this.get2, this.wx,this.$store.state.shareImg);
-
+      //this.share(this.get2, this.wx,this.$store.state.shareImg);
+      this.share(this.get2, this.wx)
       // 页面恢复离开之前的位置
       window.scrollTo(0, local.localScroll.get());
     

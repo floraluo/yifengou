@@ -31,6 +31,9 @@
             // 提交邀请码到vuex
             let invite = res.data.data.invite
             this.$store.commit('addInvite',invite)
+            if (!invite) {
+              this.$router.push('/invite')
+            }
 
             // 提交分享图片到vuex
             this.$store.commit('addShareImg',res.data.data.shareImage)

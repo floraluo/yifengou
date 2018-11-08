@@ -124,8 +124,8 @@ export default {
     }
 
       // 分享
-      this.share(this.get2, this.wx,this.$store.state.shareImg);
-
+      //this.share(this.get2, this.wx,this.$store.state.shareImg);
+     this.share(this.get2, this.wx)
 
     // 结果为true时再初始页面
     //login.checkInitData().then(func);
