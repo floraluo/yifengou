@@ -116,6 +116,7 @@ export default {
           if (!res.data.data.invite){
             this.$router.push("/invite");
           } else {
+            this.getCartCount();
             this.share(this.get2, this.wx, res.data.data.shareImage);
             let list = JSON.parse(res.data.data.text)
             this.indexList = list.index_list
@@ -129,7 +130,7 @@ export default {
       this.initView()
 
       // 购物车数量
-      this.getCartCount();
+      //this.getCartCount();
 
       // 分享
       //this.share(this.get2, this.wx, this.$store.state.shareImg);

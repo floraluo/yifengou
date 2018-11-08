@@ -14,6 +14,7 @@
         <li v-for="(item,index) in navList" :key="index" ref="navitem" :class="{active:idx===index}" @click="switchGoodsType(index)">
           {{item.value}}
         </li>
+        
       </ul>
     </div>
     <div class="goods_list">

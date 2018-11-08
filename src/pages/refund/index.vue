@@ -107,6 +107,7 @@ export default {
           if (!res.data.data.invite){
             this.$router.push("/invite");
           } else {
+            this.getUserInfo();
             let list = JSON.parse(res.data.data.text)
             this.bindList = list.bind_list
             this.invite = res.data.data.invite
@@ -120,7 +121,7 @@ export default {
 
     this.initView()
 
-    this.getUserInfo();
+    //this.getUserInfo();
 
       // 分享
       //this.share(this.get2, this.wx, this.$store.state.shareImg);

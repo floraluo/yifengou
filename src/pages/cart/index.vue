@@ -72,6 +72,7 @@ export default {
           if (!res.data.data.invite){
             this.$router.push("/invite");
           } else {
+            this.getCartList();
             this.share(this.get2, this.wx, res.data.data.shareImage);
           }
         }
@@ -81,7 +82,6 @@ export default {
   mounted() {
       this.initView()
 
-      this.getCartList();
       // 分享
       // this.share(this.get2, this.wx, this.$store.state.shareImg);
 
