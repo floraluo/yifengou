@@ -17,15 +17,16 @@ import login from "../../module/login";
 export default {
   data(){
     return {
+      ruleList:[]
     }
   },
   components:{
     tabbar
   },
   computed:{
-    ruleList(){
-      return this.$store.state.ruleList
-    }
+    // ruleList(){
+    //   return this.$store.state.ruleList
+    // }
   },
   methods:{
     initView(){
@@ -34,6 +35,9 @@ export default {
         if (res.data.code === 200) {
           if (res.data.data.showInvite){
             this.$router.push("/invite");
+          }else {
+            let list = JSON.parse(res.data.data.text)
+            this.ruleList = list.rule_list
           }
         }
       })

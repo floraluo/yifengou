@@ -48,17 +48,19 @@ export default {
       phone: "",
       id: "",
 
-      showRefund: false
+      showRefund: false,
+      bindList:[],
+      invite:''
     };
   },
   computed: {
-    bindList() {
-      return this.$store.state.bindList;
-    },
+    // bindList() {
+    //   return this.$store.state.bindList;
+    // },
     // 邀请码
-    invite() {
-      return this.$store.state.invite;
-    }
+    // invite() {
+    //   return this.$store.state.invite;
+    // }
   },
   components: {
     tabbar
@@ -112,6 +114,9 @@ export default {
             this.$router.push("/invite");
           } else {
             this.getUserInfo();
+            let list = JSON.parse(res.data.data.text)
+            this.bindList = list.bind_list
+            this.invite = res.data.data.invite
           }
         }
       });
