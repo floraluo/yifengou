@@ -184,7 +184,7 @@ export default {
   margin: 10px;
 }
 .goods .rule_box span {
-  font-size: 14px;
+  font-size: 12px;
 }
 .goods .verify {
   display: flex;
@@ -243,6 +243,7 @@ export default {
   color: white;
   text-align: center;
   margin-right: 6px;
+  font-size: 15px;
 }
 .goods .type_nav .nav_list li.active {
   color: #fde43d;
