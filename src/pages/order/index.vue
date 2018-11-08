@@ -1,5 +1,7 @@
 <template>
-  <div class="order">
+<div>
+  <div v-if="!showOrder" style="color:white;text-align:center;padding-top:10px;">数据加载中...</div>
+  <div class="order" v-if="showOrder">
     <!-- 下拉刷新
     <div class="tip_text" v-if="showTip">{{tipText}}</div> -->
     <div class="order_detail">
@@ -26,6 +28,8 @@
     </div>
     <tabbar />
   </div>
+</div>
+ 
 </template>
 
 <script>
@@ -36,7 +40,8 @@ export default {
     return {
       orderCount: 0,
       allMoney: 0,
-      orderList: []
+      orderList: [],
+      showOrder:false
     };
   },
   components: {
@@ -51,6 +56,7 @@ export default {
           this.orderCount = res.data.data.count;
           this.allMoney = res.data.data.money;
           this.orderList = res.data.data.list;
+          this.showOrder = true
         }
       });
     },

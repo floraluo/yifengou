@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="!id" style="color:white;text-align:center;padding-top:10px;">数据加载中...</div>
-    <div class="bind">
+    <div v-if="!showRefund" style="color:white;text-align:center;padding-top:10px;">数据加载中...</div>
+    <div class="bind" v-if="showRefund">
     <div class="invite_code">
       <div class="tip">
         邀请码<span>{{invite}}</span>
@@ -47,6 +47,8 @@ export default {
       zfbAccount: "",
       phone: "",
       id: "",
+
+      showRefund:false
     };
   },
   computed: {
@@ -97,6 +99,7 @@ export default {
           this.zfbAccount = res.data.data.zfbAccount;
           this.phone = res.data.data.phone;
           this.id = res.data.data.id;
+          this.showRefund = true
         }
       });
     },
