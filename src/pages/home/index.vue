@@ -1,5 +1,7 @@
 <template>
-  <div class="home">
+<div>
+  <div v-if="!invite" style="color:white;text-align:center;padding-top:10px;">数据加载中</div>
+  <div v-if="invite" class="home" >
     <!-- 下拉刷新 -->
     <!-- <div class="tip_text" v-if="showTip">{{tipText}}</div> -->
     <!-- 轮播 -->
@@ -23,6 +25,9 @@
       <span class='count'>{{cartCount}}</span>
     </div>
   </div>
+</div>
+  
+  
 </template>
 
 <script>
@@ -33,6 +38,7 @@ import login from "../../module/login";
 export default {
   data() {
     return {
+      showLoading:true,
       idx: 0, // 根据下标控制菜单项显示,
       swiperOption: {
         // 轮播图控制项（参考swiper4）
@@ -42,7 +48,8 @@ export default {
           el: ".swiper-pagination"
         }
       },
-      scrollTop: 0
+      scrollTop: 0,
+      invite:''
     };
   },
   beforeRouteLeave(to, from, next) {
@@ -114,6 +121,7 @@ export default {
           if (!res.data.data.invite){
             this.$router.push("/invite");
           } else {
+            this.invite = res.data.data.invite
             this.getCartCount();
           }
         }

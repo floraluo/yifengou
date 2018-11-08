@@ -1,5 +1,7 @@
 <template>
-  <div class="bind">
+  <div>
+    <div v-if="!id" style="color:white;text-align:center;padding-top:10px;">数据加载中...</div>
+    <div v-if="id"  class="bind">
     <div class="invite_code">
       <div class="tip">
         邀请码<span>{{invite}}</span>
@@ -31,6 +33,8 @@
     </div>
     <tabbar />
   </div>
+  </div>
+  
 </template>
 
 <script>
@@ -42,7 +46,7 @@ export default {
       zfbUsername: "",
       zfbAccount: "",
       phone: "",
-      id: ""
+      id: "",
     };
   },
   computed: {
@@ -97,24 +101,27 @@ export default {
       });
     },
 
-    initView(){
-      this.$get('/init').then(res=>{
-        console.log('init',res)
-        if (res.data.code === 200) {
-          if (!res.data.data.invite){
-            this.$router.push("/invite");
-          } else {
-            this.getUserInfo();
-          }
-        }
-      })
-    }
+    // initView(){
+    //   this.$get('/init').then(res=>{
+    //     console.log('init',res)
+    //     if (res.data.code === 200) {
+    //       if (!res.data.data.invite){
+    //         this.$router.push("/invite");
+    //       } else {
+    //         this.getUserInfo();
+    //       }
+    //     }
+    //   })
+    // }
   },
   mounted() {
 
-    this.initView()
-
-    //this.getUserInfo();
+    //this.initView()
+    if (this.$store.state.invite) {
+      this.getUserInfo();
+    } else {
+      this.$router.push('/invite')
+    }
 
       // 分享
       this.share(this.get2, this.wx, this.$store.state.shareImg);

@@ -1,29 +1,32 @@
 <template>
-  <div class="goods">
-    <div class="rule_box">
-      <div v-for="(itemList,index) in indexList" :key="index">
-        <span v-for="(item,idx) in itemList" :key="idx" :style="{color:item.color}">{{item.text}}</span>
+  <div>
+    <div class="goods">
+      <div class="rule_box">
+        <div v-for="(itemList,index) in indexList" :key="index">
+          <span v-for="(item,idx) in itemList" :key="idx" :style="{color:item.color}">{{item.text}}</span>
+        </div>
       </div>
-    </div>
-    <div class="verify" @click="gotoOrder">
-      <div>下单后验证订单>></div>
-      <div class="tip">(验证完订单并绑定提现账号后才可获得补贴)</div>
-    </div>
-    <div class="type_nav" ref="wrapper">
-      <ul class="nav_list" ref="navlist">
-        <li v-for="(item,index) in navList" :key="index" ref="navitem" :class="{active:idx===index}" @click="switchGoodsType(index)">
-          {{item.value}}
-        </li>
-        
-      </ul>
-    </div>
-    <div class="goods_list">
-      <list-item v-for="(item,index) in goodsList" @click.native="goBuy(item.id)" :key="index" :id="item.id" :pic="item.goodsImg" :name="item.goodsContent" :couponPrice="item.couponPrice" :discountPrice="item.discountPrice" :goodsPrice="item.goodsPrice" />
-      <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="20">
-        <div class="bottom_tip" @click="updateGoods">{{bootomText}}</div>
+      <div class="verify" @click="gotoOrder">
+        <div>下单后验证订单>></div>
+        <div class="tip">(验证完订单并绑定提现账号后才可获得补贴)</div>
+      </div>
+      <div class="type_nav" ref="wrapper">
+        <ul class="nav_list" ref="navlist">
+          <li v-for="(item,index) in navList" :key="index" ref="navitem" :class="{active:idx===index}" @click="switchGoodsType(index)">
+            {{item.value}}
+          </li>
+
+        </ul>
+      </div>
+      <div class="goods_list">
+        <list-item v-for="(item,index) in goodsList" @click.native="goBuy(item.id)" :key="index" :id="item.id" :pic="item.goodsImg" :name="item.goodsContent" :couponPrice="item.couponPrice" :discountPrice="item.discountPrice" :goodsPrice="item.goodsPrice" />
+        <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="20">
+          <div class="bottom_tip" @click="updateGoods">{{bootomText}}</div>
+        </div>
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -107,7 +110,7 @@ export default {
         let data = res.data.data;
         // 更新navlist
         this.navList = this.navList.length ? this.navList : (data.typeList || []);
-        console.log(this.navList)
+        console.log(this.navList);
         // 商品是否还有下一页
         this.goodsListHasMore = data.hasMore;
 
@@ -167,8 +170,8 @@ export default {
     }
   },
   mounted() {
-    this.initTabScroll();
     this.getGoodsData();
+    this.initTabScroll();
   }
 };
 </script>

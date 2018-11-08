@@ -17,7 +17,6 @@
     methods:{ 
       // 页面初始化
       initView(){ 
-        console.log('-------111')
         this.$get('/init').then(res=>{
           console.log('init',res)
           if (res.data.code === 200) {

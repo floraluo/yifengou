@@ -55,21 +55,26 @@ export default {
       });
     },
 
-    initView(){
-      this.$get('/init').then(res=>{
-        console.log('init',res)
-        if (res.data.code === 200) {
-          if (!res.data.data.invite){
-            this.$router.push("/invite");
-          } else {
-            this.getOrderInfo();
-          }
-        }
-      })
-    }
+    // initView(){
+    //   this.$get('/init').then(res=>{
+    //     console.log('init',res)
+    //     if (res.data.code === 200) {
+    //       if (!res.data.data.invite){
+    //         this.$router.push("/invite");
+    //       } else {
+    //         this.getOrderInfo();
+    //       }
+    //     }
+    //   })
+    // }
   },
   mounted() {
-     this.initView()
+     //this.initView()
+     if (this.$store.state.invite) {
+       this.getOrderInfo();
+     } else {
+       this.$router.push('/invite')
+     }
 
       // 分享
       this.share(this.get2, this.wx, this.$store.state.shareImg);
