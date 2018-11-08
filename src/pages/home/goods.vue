@@ -106,6 +106,7 @@ export default {
         let data = res.data.data;
         // 更新navlist
         this.navList = this.navList.length ? this.navList : (data.typeList || []);
+        console.log(this.navList)
         // 商品是否还有下一页
         this.goodsListHasMore = data.hasMore;
 

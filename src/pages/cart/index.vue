@@ -72,8 +72,6 @@ export default {
             this.$router.push("/invite");
             return;
           }
-        }else {
-          this.$router.push("/invite");
         }
       })
     }
