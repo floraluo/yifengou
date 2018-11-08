@@ -1,35 +1,35 @@
 <template>
-<div>
-  <div v-if="!showOrder" style="color:white;text-align:center;padding-top:10px;">数据加载中...</div>
-  <div class="order" v-if="showOrder">
-    <!-- 下拉刷新
+  <div>
+    <div v-if="!showOrder" style="color:white;text-align:center;padding-top:10px;">数据加载中...</div>
+    <div class="order" v-if="showOrder">
+      <!-- 下拉刷新
     <div class="tip_text" v-if="showTip">{{tipText}}</div> -->
-    <div class="order_detail">
-      <div class="title">预估有效订单</div>
-      <div class="subtitle">已付款并符合活动规则的订单</div>
-      <div class='detail'>
-        <div class='item'>
-          <span class='num'>{{orderCount}}</span>
-          <span class='desc'>预估有效订单数(笔)</span>
+      <div class="order_detail">
+        <div class="title">预估有效订单</div>
+        <div class="subtitle">已付款并符合活动规则的订单</div>
+        <div class='detail'>
+          <div class='item'>
+            <span class='num'>{{orderCount}}</span>
+            <span class='desc'>预估有效订单数(笔)</span>
+          </div>
+          <div class='item'>
+            <span class='num'>{{allMoney}}</span>
+            <span class='desc'>总金额(元)</span>
+          </div>
         </div>
-        <div class='item'>
-          <span class='num'>{{allMoney}}</span>
-          <span class='desc'>总金额(元)</span>
-        </div>
+        <div class='warning'>1、将直接打入填写的支付宝账号。2、由于订单量大，同步订单数据会有延迟，请耐心等待，不要随意退款。</div>
       </div>
-      <div class='warning'>1、将直接打入填写的支付宝账号。2、由于订单量大，同步订单数据会有延迟，请耐心等待，不要随意退款。</div>
-    </div>
-    <div class="order_list">
-      <div class="no_order" v-if="!orderList.length">暂无订单</div>
-      <div class="order_item" v-for="(item,index) in orderList" :key="index">
-        <div>{{item.orderNo}}</div>
-        <div>{{item.statusName}}</div>
+      <div class="order_list">
+        <div class="no_order" v-if="!orderList.length">暂无订单</div>
+        <div class="order_item" v-for="(item,index) in orderList" :key="index">
+          <div>{{item.orderNo}}</div>
+          <div>{{item.statusName}}</div>
+        </div>
       </div>
     </div>
     <tabbar />
   </div>
-</div>
- 
+
 </template>
 
 <script>
@@ -41,7 +41,7 @@ export default {
       orderCount: 0,
       allMoney: 0,
       orderList: [],
-      showOrder:false
+      showOrder: false
     };
   },
   components: {
@@ -56,30 +56,30 @@ export default {
           this.orderCount = res.data.data.count;
           this.allMoney = res.data.data.money;
           this.orderList = res.data.data.list;
-          this.showOrder = true
+          this.showOrder = true;
         }
       });
     },
 
-    initView(){
-      this.$get('/init').then(res=>{
-        console.log('init',res)
+    initView() {
+      this.$get("/init").then(res => {
+        console.log("init", res);
         if (res.data.code === 200) {
-          if (res.data.data.showInvite){
+          if (res.data.data.showInvite) {
             this.$router.push("/invite");
           } else {
             this.getOrderInfo();
           }
         }
-      })
+      });
     }
   },
   mounted() {
-     this.initView()
+    this.initView();
 
-      // 分享
-      //this.share(this.get2, this.wx,this.$store.state.shareImg);
-      this.share(this.get2, this.wx)
+    // 分享
+    //this.share(this.get2, this.wx,this.$store.state.shareImg);
+    this.share(this.get2, this.wx);
   }
 };
 </script>

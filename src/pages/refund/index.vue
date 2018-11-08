@@ -2,39 +2,39 @@
   <div>
     <div v-if="!showRefund" style="color:white;text-align:center;padding-top:10px;">数据加载中...</div>
     <div class="bind" v-if="showRefund">
-    <div class="invite_code">
-      <div class="tip">
-        邀请码<span>{{invite}}</span>
-      </div>
-    </div>
-    <div class="input_info">
-      <div class='tip'>收款支付宝
-        <span class='text1'>（{{bindList.bind_time}}）</span>
-        <span class='text2'>ID: {{id}}</span>
-      </div>
-      <div class="form">
-        <div class='text'>
-          <span class='inputType'>真实姓名</span>
-          <input placeholder='输入真实姓名' v-model="zfbUsername" type='text' />
+      <div class="invite_code">
+        <div class="tip">
+          邀请码<span>{{invite}}</span>
         </div>
-        <div class='text'>
-          <span class='inputType'>支付宝账号</span>
-          <input placeholder='输入支付宝账号' v-model="zfbAccount" type="text" />
-        </div>
-        <div class='text'>
-          <span class='inputType'>手机号</span>
-          <input placeholder='输入手机号' v-model="phone" type="text" />
-        </div>
-        <div class="save_btn" @click="saveUserInfo">保存</div>
       </div>
-      <div class="warning">
-        {{bindList.refund_time}}
+      <div class="input_info">
+        <div class='tip'>收款支付宝
+          <span class='text1'>（{{bindList.bind_time}}）</span>
+          <span class='text2'>ID: {{id}}</span>
+        </div>
+        <div class="form">
+          <div class='text'>
+            <span class='inputType'>真实姓名</span>
+            <input placeholder='输入真实姓名' v-model="zfbUsername" type='text' />
+          </div>
+          <div class='text'>
+            <span class='inputType'>支付宝账号</span>
+            <input placeholder='输入支付宝账号' v-model="zfbAccount" type="text" />
+          </div>
+          <div class='text'>
+            <span class='inputType'>手机号</span>
+            <input placeholder='输入手机号' v-model="phone" type="text" />
+          </div>
+          <div class="save_btn" @click="saveUserInfo">保存</div>
+        </div>
+        <div class="warning">
+          {{bindList.refund_time}}
+        </div>
       </div>
     </div>
     <tabbar />
   </div>
-  </div>
-  
+
 </template>
 
 <script>
@@ -48,7 +48,7 @@ export default {
       phone: "",
       id: "",
 
-      showRefund:false
+      showRefund: false
     };
   },
   computed: {
@@ -99,31 +99,30 @@ export default {
           this.zfbAccount = res.data.data.zfbAccount;
           this.phone = res.data.data.phone;
           this.id = res.data.data.id;
-          this.showRefund = true
+          this.showRefund = true;
         }
       });
     },
 
-    initView(){
-      this.$get('/init').then(res=>{
-        console.log('init',res)
+    initView() {
+      this.$get("/init").then(res => {
+        console.log("init", res);
         if (res.data.code === 200) {
-          if (res.data.data.showInvite){
+          if (res.data.data.showInvite) {
             this.$router.push("/invite");
           } else {
             this.getUserInfo();
           }
         }
-      })
+      });
     }
   },
   mounted() {
+    this.initView();
 
-    this.initView()
-
-      // 分享
-      //this.share(this.get2, this.wx,this.$store.state.shareImg);
-     this.share(this.get2, this.wx)
+    // 分享
+    //this.share(this.get2, this.wx,this.$store.state.shareImg);
+    this.share(this.get2, this.wx);
 
     // 结果为true时再初始页面
     //login.checkInitData().then(func);
