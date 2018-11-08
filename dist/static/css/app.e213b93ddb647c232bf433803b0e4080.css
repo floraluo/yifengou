@@ -253,7 +253,7 @@ body {
 }
 .list_item .goods_info .goods_name {
   width: 100%;
-  height: 35px;
+  height: 38px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   padding-left: 10px;
@@ -266,7 +266,6 @@ body {
 @media only screen and (max-width:320px){
 .list_item .goods_info .goods_name{
         font-size: 14px;
-        height: 35px;
 }
 }
 .list_item .goods_info .goods_price {
@@ -666,7 +665,7 @@ body {
 }
 .list_item .goods_info .goods_name {
   width: 100%;
-  height: 35px;
+  height: 38px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   padding-left: 10px;
@@ -679,7 +678,6 @@ body {
 @media only screen and (max-width: 320px) {
 .list_item .goods_info .goods_name {
     font-size: 14px;
-    height: 35px;
 }
 }
 .list_item .goods_info .goods_price {
@@ -2114,4 +2112,4 @@ button.swiper-pagination-bullet {
         opacity: 0.895958333333333;
     }
 }
-/*# sourceMappingURL=app.3b8b8d5385cf95f07bdb5826990af0a9.css.map*/
+/*# sourceMappingURL=app.e213b93ddb647c232bf433803b0e4080.css.map*/
