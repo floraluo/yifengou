@@ -30,6 +30,9 @@ import BScroll from "better-scroll";
 //import local from "@/config/storage";
 import listItem from "@/components/listItem";
 export default {
+  props:{
+    indexList:Array
+  },
   data() {
     return {
       idx: 0, // 控制商品类型菜单的显示
@@ -56,9 +59,9 @@ export default {
       return this.goodsListHasMore ? "加载数据中..." : "换一批";
     },
     // 规则说明
-    indexList() {
-      return this.$store.state.indexList;
-    }
+    // indexList() {
+    //   return this.$store.state.indexList;
+    // }
   },
   methods: {
     // 点击切换商品类型

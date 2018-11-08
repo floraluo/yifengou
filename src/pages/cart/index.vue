@@ -15,7 +15,8 @@ import login from "../../module/login";
 export default {
   data() {
     return {
-      cartList: []
+      cartList: [],
+      shareImg:''
     };
   },
   components: {
@@ -70,7 +71,8 @@ export default {
         if (res.data.code === 200) {
           if (!res.data.data.invite){
             this.$router.push("/invite");
-            return;
+          } else {
+            this.share(this.get2, this.wx, res.data.data.shareImage);
           }
         }
       })
@@ -81,7 +83,7 @@ export default {
 
       this.getCartList();
       // 分享
-      this.share(this.get2, this.wx, this.$store.state.shareImg);
+      // this.share(this.get2, this.wx, this.$store.state.shareImg);
 
   }
 };

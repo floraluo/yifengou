@@ -42,17 +42,20 @@ export default {
       zfbUsername: "",
       zfbAccount: "",
       phone: "",
-      id: ""
+      id: "",
+
+      bindList:[],
+      invite:''
     };
   },
   computed: {
-    bindList() {
-      return this.$store.state.bindList;
-    },
+    // bindList() {
+    //   return this.$store.state.bindList;
+    // },
     // 邀请码
-    invite() {
-      return this.$store.state.invite;
-    }
+    // invite() {
+    //   return this.$store.state.invite;
+    // }
   },
   components: {
     tabbar
@@ -103,7 +106,11 @@ export default {
         if (res.data.code === 200) {
           if (!res.data.data.invite){
             this.$router.push("/invite");
-            return;
+          } else {
+            let list = JSON.parse(res.data.data.text)
+            this.bindList = list.bind_list
+            this.invite = res.data.data.invite
+            this.share(this.get2, this.wx, res.data.data.shareImage);
           }
         }
       })
@@ -113,15 +120,10 @@ export default {
 
     this.initView()
 
-      // 判断是否有邀请码，没有就跳转填写页面
-      // let invite = this.$store.state.invite;
-      // if (!invite) {
-      //   this.$router.push("/invite");
-      // }
+    this.getUserInfo();
 
-      this.getUserInfo();
       // 分享
-      this.share(this.get2, this.wx, this.$store.state.shareImg);
+      //this.share(this.get2, this.wx, this.$store.state.shareImg);
 
 
     // 结果为true时再初始页面

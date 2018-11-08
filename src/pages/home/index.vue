@@ -15,7 +15,7 @@
       <img :src="bannerTopList[0]">
     </div>
     <!-- 商品部分 -->
-    <goods />
+    <goods :indexList="indexList" />
     <tabbar />
     <!-- 悬浮购物车icon -->
     <div class="cart" @click="gotoCart">
@@ -34,12 +34,6 @@ export default {
   data() {
     return {
       idx: 0, // 根据下标控制菜单项显示,
-      //el: null, // 下拉元素（mounted中初始）
-      //startX: 0, // 开始下拉的位置x
-      //startY: 0, // 开始下拉的位置y
-      //tipText: "下拉刷新", // 下拉刷新提示文字
-      //showTip: false, // 是否显示下拉刷新提示文字
-      //moveDistance: 0, // 下拉的距离
       swiperOption: {
         // 轮播图控制项（参考swiper4）
         autoplay: false,
@@ -48,7 +42,9 @@ export default {
           el: ".swiper-pagination"
         }
       },
-      scrollTop: 0
+      scrollTop: 0,
+      bannerTopList:[],
+      indexList:[]
     };
   },
   beforeRouteLeave(to, from, next) {
@@ -78,9 +74,9 @@ export default {
     },
 
     // 从vuex中拿bannerTopList列表
-    bannerTopList() {
-      return this.$store.state.bannerTopList;
-    }
+    // bannerTopList() {
+    //   return this.$store.state.bannerTopList;
+    // }
   },
   methods: {
     // 菜单项的点击（通过下标控制显示）
@@ -115,11 +111,15 @@ export default {
 
      initView(){
       this.$get('/init').then(res=>{
-        console.log('init',res)
+        console.log('home-init',res)
         if (res.data.code === 200) {
           if (!res.data.data.invite){
             this.$router.push("/invite");
-            return;
+          } else {
+            this.share(this.get2, this.wx, res.data.data.shareImage);
+            let list = JSON.parse(res.data.data.text)
+            this.indexList = list.index_list
+            this.bannerTopList = res.data.data.bannerTopList
           }
         }
       })
@@ -128,18 +128,11 @@ export default {
   activated() {
       this.initView()
 
-      // 判断是否有邀请码，没有就跳转填写页面
-      // let invite = this.$store.state.invite;
-      // console.log(invite);
-      // if (!invite) {
-      //   this.$router.push("/invite");
-      // }
-
       // 购物车数量
       this.getCartCount();
 
       // 分享
-      this.share(this.get2, this.wx, this.$store.state.shareImg);
+      //this.share(this.get2, this.wx, this.$store.state.shareImg);
 
       // 页面恢复离开之前的位置
       window.scrollTo(0, local.localScroll.get());

@@ -61,23 +61,20 @@ export default {
         if (res.data.code === 200) {
           if (!res.data.data.invite){
             this.$router.push("/invite");
-            return;
+          } else {
+            this.share(this.get2, this.wx, res.data.data.shareImage);
           }
         }
       })
     }
   },
   mounted() {
-    this.initView()
-      // 判断是否有邀请码，没有就跳转填写页面
-      // let invite = this.$store.state.invite;
-      // if (!invite) {
-      //   this.$router.push("/invite");
-      // }
+     this.initView()
 
-      this.getOrderInfo();
+    this.getOrderInfo();
+
       // 分享
-      this.share(this.get2, this.wx, this.$store.state.shareImg);
+      //this.share(this.get2, this.wx, this.$store.state.shareImg);
 
 
     // 结果为true时再初始页面
