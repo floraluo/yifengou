@@ -96,6 +96,7 @@ export default {
         console.log("购物车数量", res);
         if (res.data.code === 200) {
           this.cartCount = res.data.data;
+          this.$loading.close()
         }
       });
     },
@@ -110,6 +111,7 @@ export default {
     },
 
      initView(){
+      this.$loading('正在加载数据...')
       this.$get('/init').then(res=>{
         console.log('home-init',res)
         if (res.data.code === 200) {
