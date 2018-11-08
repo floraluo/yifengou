@@ -53,14 +53,29 @@ export default {
           this.orderList = res.data.data.list;
         }
       });
+    },
+
+    initView(){
+      this.$get('/init').then(res=>{
+        console.log('init',res)
+        if (res.data.code === 200) {
+          if (!res.data.data.invite){
+            this.$router.push("/invite");
+            return;
+          }
+        } else {
+          this.$router.push("/invite");
+        }
+      })
     }
   },
   mounted() {
+    this.initView()
       // 判断是否有邀请码，没有就跳转填写页面
-      let invite = this.$store.state.invite;
-      if (!invite) {
-        this.$router.push("/invite");
-      }
+      // let invite = this.$store.state.invite;
+      // if (!invite) {
+      //   this.$router.push("/invite");
+      // }
 
       this.getOrderInfo();
       // 分享

@@ -258,6 +258,9 @@ body {
   padding-left: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 @media only screen and (max-width:320px){
 .list_item .goods_info .goods_name{
@@ -668,6 +671,9 @@ body {
   padding-left: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 @media only screen and (max-width: 320px) {
 .list_item .goods_info .goods_name {
@@ -2107,4 +2113,4 @@ button.swiper-pagination-bullet {
         opacity: 0.895958333333333;
     }
 }
-/*# sourceMappingURL=app.8dbb346c104c8de72378a1596cc12ac9.css.map*/
+/*# sourceMappingURL=app.d3c98c7061a8011b20d07070e2060941.css.map*/

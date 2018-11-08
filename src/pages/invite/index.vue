@@ -32,6 +32,7 @@ export default {
               if (res.data.code === 200) {
                   this.$toast.center('绑定成功')
                   this.$store.commit('addInvite',this.invite)
+                  
                   this.$router.push('/')
               } else {
                   this.$toast.center(res.data.msg)

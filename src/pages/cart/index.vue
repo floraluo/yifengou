@@ -63,21 +63,28 @@ export default {
           this.$toast.center("请重试");
         }
       });
+    },
+    initView(){
+      this.$get('/init').then(res=>{
+        console.log('init',res)
+        if (res.data.code === 200) {
+          if (!res.data.data.invite){
+            this.$router.push("/invite");
+            return;
+          }
+        }else {
+          this.$router.push("/invite");
+        }
+      })
     }
   },
   mounted() {
+      this.initView()
 
-      // 判断是否有邀请码，没有就跳转填写页面
-      let invite = this.$store.state.invite;
-      if (!invite) {
-        this.$router.push("/invite");
-      }
       this.getCartList();
       // 分享
       this.share(this.get2, this.wx, this.$store.state.shareImg);
 
-    // 结果为true时再初始页面
-    //login.checkInitData().then(func);
   }
 };
 </script>

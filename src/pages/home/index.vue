@@ -57,7 +57,7 @@ export default {
        document.documentElement.scrollTop || document.body.scrollTop;
     
     // 将滚动距离也保存一份到本地，用于京东跳回使用
-    local.localScroll.set(this.scrollTop)
+     local.localScroll.set(this.scrollTop)
     next();
   },
   components: {
@@ -111,18 +111,31 @@ export default {
     // 去购物车列表页
     gotoCart() {
       this.$router.push("/cart");
+    },
+
+     initView(){
+      this.$get('/init').then(res=>{
+        console.log('init',res)
+        if (res.data.code === 200) {
+          if (!res.data.data.invite){
+            this.$router.push("/invite");
+            return;
+          }
+        } else {
+          this.$router.push("/invite");
+        }
+      })
     }
   },
   activated() {
-    var func = () => {
-      // 判断是否有邀请码，没有就跳转填写页面
-      let invite = this.$store.state.invite;
-      console.log(invite);
-      if (!invite) {
-        this.$router.push("/invite");
-      }
+      this.initView()
 
-      // 取本地存储的goodsType
+      // 判断是否有邀请码，没有就跳转填写页面
+      // let invite = this.$store.state.invite;
+      // console.log(invite);
+      // if (!invite) {
+      //   this.$router.push("/invite");
+      // }
 
       // 购物车数量
       this.getCartCount();
@@ -132,10 +145,10 @@ export default {
 
       // 页面恢复离开之前的位置
       window.scrollTo(0, local.localScroll.get());
-    };
+    
      // 结果为true时再初始页面
-    login.checkInitData().then(func)
-  }
+    //login.checkInitData().then(func)
+  },
 };
 </script>
 
