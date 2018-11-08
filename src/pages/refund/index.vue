@@ -101,27 +101,22 @@ export default {
       });
     },
 
-    // initView(){
-    //   this.$get('/init').then(res=>{
-    //     console.log('init',res)
-    //     if (res.data.code === 200) {
-    //       if (!res.data.data.invite){
-    //         this.$router.push("/invite");
-    //       } else {
-    //         this.getUserInfo();
-    //       }
-    //     }
-    //   })
-    // }
+    initView(){
+      this.$get('/init').then(res=>{
+        console.log('init',res)
+        if (res.data.code === 200) {
+          if (res.data.data.showInvite){
+            this.$router.push("/invite");
+          } else {
+            this.getUserInfo();
+          }
+        }
+      })
+    }
   },
   mounted() {
 
-    //this.initView()
-    if (this.$store.state.invite) {
-      this.getUserInfo();
-    } else {
-      this.$router.push('/invite')
-    }
+    this.initView()
 
       // 分享
       //this.share(this.get2, this.wx,this.$store.state.shareImg);
