@@ -50,7 +50,7 @@ export default {
           } else {
             if (res.data.data.link) {
               console.log(res.data.data.link);
-              window.location.href = res.data.data.link
+               window.location.href = res.data.data.link
             }
           }
         } else if (res.data.code === 1001) {
@@ -66,7 +66,7 @@ export default {
     }
   },
   mounted() {
-    var func = () => {
+
       // 判断是否有邀请码，没有就跳转填写页面
       let invite = this.$store.state.invite;
       if (!invite) {
@@ -75,9 +75,9 @@ export default {
       this.getCartList();
       // 分享
       this.share(this.get2, this.wx, this.$store.state.shareImg);
-    };
+
     // 结果为true时再初始页面
-    login.checkInitData().then(func);
+    //login.checkInitData().then(func);
   }
 };
 </script>
