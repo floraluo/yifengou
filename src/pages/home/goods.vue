@@ -15,7 +15,6 @@
           <li v-for="(item,index) in navList" :key="index" ref="navitem" :class="{active:idx===index}" @click="switchGoodsType(index)">
             {{item.value}}
           </li>
-
         </ul>
       </div>
       <div class="goods_list">
@@ -71,6 +70,7 @@ export default {
       this.idx = index;
       this.lastId = 0;
       // 点击此项菜单时，移动到可视区
+      console.log(this.scroll)
       this.scroll.scrollToElement(this.$refs.navitem[index], 200, true, true);
       this.goodsType = this.navList[index].key;
       this.getGoodsData();
@@ -170,8 +170,8 @@ export default {
     }
   },
   mounted() {
-    this.getGoodsData();
     this.initTabScroll();
+    this.getGoodsData();
   }
 };
 </script>
@@ -244,6 +244,7 @@ export default {
   color: white;
   text-align: center;
   margin-right: 6px;
+  font-size: 14px;
 }
 .goods .type_nav .nav_list li.active {
   color: #fde43d;

@@ -189,6 +189,7 @@ body {
   color: white;
   text-align: center;
   margin-right: 6px;
+  font-size: 14px;
 }
 .goods .type_nav .nav_list li.active {
   color: #fde43d;
@@ -2113,4 +2114,4 @@ button.swiper-pagination-bullet {
         opacity: 0.895958333333333;
     }
 }
-/*# sourceMappingURL=app.bc6a2a3f6bc6972549b3c7d89939e9c7.css.map*/
+/*# sourceMappingURL=app.1f2e3aaf186d523881f5ae1382ed5505.css.map*/

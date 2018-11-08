@@ -39,6 +39,9 @@ export default {
               
           })
       }
+  },
+  mounted(){
+      this.share(this.get2, this.wx)
   }
 };
 </script>
