@@ -28,7 +28,7 @@
 <script>
 import goods from "./goods";
 import tabbar from "../../components/tabbar";
-// import local from "@/config/storage";
+import local from "@/config/storage";
 import login from "../../module/login";
 export default {
   data() {
@@ -52,8 +52,12 @@ export default {
     };
   },
   beforeRouteLeave(to, from, next) {
-    this.scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
+    // 离开路由之前保存滚动距离，因页面缓存，在下次进入时，this.scrollTop值可以在activated周期函数里访问到
+     this.scrollTop =
+       document.documentElement.scrollTop || document.body.scrollTop;
+    
+    // 将滚动距离也保存一份到本地，用于京东跳回使用
+    local.set(this.scrollTop)
     next();
   },
   components: {
@@ -121,15 +125,11 @@ export default {
       // 购物车数量
       this.getCartCount();
 
-      // 获取home元素，添加touch事件，做下拉刷新
-      // this.el = document.querySelector(".home");
-      // this.bindTouchEvent();
-
       // 分享
       this.share(this.get2, this.wx, this.$store.state.shareImg);
 
       // 页面恢复离开之前的位置
-      window.scrollTo(0, this.scrollTop);
+      window.scrollTo(0, local.get());
     };
      // 结果为true时再初始页面
     login.checkInitData().then(func)

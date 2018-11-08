@@ -80,7 +80,7 @@ let share = (get, wx, shareImg) => {
     wx.ready(function() {
       var imgurl = shareImg;
       var title = "点我优惠购";
-      var desc = "双十一嗨翻";
+      var desc = "千万爆品，一分抄底；全民嗨购，狂欢24小时。";
       wx.onMenuShareTimeline({
         title: title, // 分享标题
         desc: desc, // 分享描述

@@ -148,7 +148,7 @@ export default {
 .bind .tip .text1 {
   color: #ec4e4f;
   font-size: 12px;
-  margin-right: 30px;
+  margin-right: 8px;
 }
 .bind .tip .text2 {
   color: #999;
@@ -205,7 +205,7 @@ export default {
     font-size: 14px;
   }
   .bind .tip .text1 {
-    margin-right: 10px;
+    margin-right: 5px;
   }
   .bind .input_info .form {
     margin: 10px;
