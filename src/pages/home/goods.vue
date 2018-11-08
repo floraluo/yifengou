@@ -110,7 +110,7 @@ export default {
         let data = res.data.data;
         // 更新navlist
         this.navList = this.navList.length ? this.navList : (data.typeList || []);
-        console.log(this.navList);
+         this.initTabScroll();    
         // 商品是否还有下一页
         this.goodsListHasMore = data.hasMore;
 
@@ -151,7 +151,7 @@ export default {
       let width = 0;
       for (let i = 0; i < this.navList.length; i++) {
         // width += this.$refs.navitem[1].getBoundingClientRect().width;
-        width += 75;
+        width += 80;
       }
       this.$refs.navlist.style.width = width + "px";
       this.$nextTick(() => {
@@ -170,7 +170,6 @@ export default {
     }
   },
   mounted() {
-    this.initTabScroll();
     this.getGoodsData();
   }
 };
@@ -244,7 +243,6 @@ export default {
   color: white;
   text-align: center;
   margin-right: 6px;
-  font-size: 14px;
 }
 .goods .type_nav .nav_list li.active {
   color: #fde43d;
