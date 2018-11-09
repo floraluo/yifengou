@@ -47,12 +47,7 @@ export default {
     };
   },
   beforeRouteLeave(to, from, next) {
-    // 离开路由之前保存滚动距离，因页面缓存，在下次进入时，this.scrollTop值可以在activated周期函数里访问到
-     this.scrollTop =
-       document.documentElement.scrollTop || document.body.scrollTop;
-    
-    // 将滚动距离也保存一份到本地，用于京东跳回使用
-     local.localScroll.set(this.scrollTop)
+    this.saveScrollTop()
     next();
   },
   components: {
@@ -87,6 +82,24 @@ export default {
     },
     clickStep3() {
       this.idx = 2;
+    },
+
+    //  离开页面事件
+    //leavePage(){
+      // 跳到京东不是路由跳转，需要使用beforeunload事件来保存滚动位置
+    //   window.addEventListener('beforeunload',()=>{
+    //     this.saveScrollTop()
+    //   })
+    // },
+
+    // 保存scrollTop到本地
+    saveScrollTop(){
+        // 离开路由之前保存滚动距离，因页面缓存，在下次进入时，this.scrollTop值可以在activated周期函数里访问到
+     this.scrollTop =
+       document.documentElement.scrollTop || document.body.scrollTop;
+    
+    // 将滚动距离也保存一份到本地，用于京东跳回使用
+     local.localScroll.set(this.scrollTop)
     },
 
     // 获取购物车数量
@@ -141,18 +154,11 @@ export default {
       // 购物车数量
       //this.getCartCount();
 
-      // 分享
-      //this.share(this.get2, this.wx,this.$store.state.shareImg);
       this.share(this.get2, this.wx)
       // 页面恢复离开之前的位置
       window.scrollTo(0, local.localScroll.get());
-    
-     // 结果为true时再初始页面
-    //login.checkInitData().then(func)
-  },
 
-  mounted(){
-    this.initView()
+      // this.leavePage()
   }
 };
 </script>
