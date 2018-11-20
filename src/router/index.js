@@ -8,8 +8,8 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      meta: {  
-        keepAlive:true // 标记这个路由，加上缓存
+      meta: {
+        keepAlive: true // 标记这个路由，加上缓存
       },
       component: () => import('@/pages/home/index')
     },
@@ -24,6 +24,16 @@ export default new Router({
       component: () => import('@/pages/order/index')
     },
     {
+      path: '/order/history',
+      name: 'Rule',
+      component: () => import('@/pages/order/History')
+    },
+    {
+      path: '/order/history/detail',
+      name: 'Rule',
+      component: () => import('@/pages/order/HistoryDetail')
+    },
+    {
       path: '/refund',
       name: 'Rule',
       component: () => import('@/pages/refund/index')
@@ -34,7 +44,7 @@ export default new Router({
       component: () => import('@/pages/cart/index')
     },
     {
-      path:'/invite',
+      path: '/invite',
       name: 'Invite',
       component: () => import('@/pages/invite/index')
     }
