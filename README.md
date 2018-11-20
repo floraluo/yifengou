@@ -24,17 +24,17 @@
         - home           // 主页目录
             - bind.vue   // 补贴提现
             - goods.vue  // 免单产品
-            - index.vue  
+            - index.vue
             - order.vue  // 订单提交
         - rule           // 规则页面目录
             - index.vue
 
     - router             // 路由目录
         -index.js
-    
+
     - App.vue            // 页面入口文件
 
-    - main.js            // 主入口文件  
+    - main.js            // 主入口文件
 ```
 
 # 项目运行
@@ -45,3 +45,9 @@ npm install
 
 npm run dev
 ```
+
+# 问题
+* tabbar应该公用
+* tabbar选择状态需要考虑子页面，不能简单的通过router的样式解决
+* init接口调用一遍就够了
+* style scoped 不起作用
