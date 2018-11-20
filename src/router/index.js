@@ -20,22 +20,20 @@ export default new Router({
     },
     {
       path: '/order',
-      name: 'Rule',
+      name: 'Order',
       component: () => import('@/pages/order/index')
     },
     {
       path: '/order/history',
-      name: 'Rule',
       component: () => import('@/pages/order/History')
     },
     {
       path: '/order/history/detail',
-      name: 'Rule',
       component: () => import('@/pages/order/HistoryDetail')
     },
     {
       path: '/refund',
-      name: 'Rule',
+      name: 'Refund',
       component: () => import('@/pages/refund/index')
     },
     {

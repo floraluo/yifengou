@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       cartList: [],
-      shareImg:''
+      shareImg: ""
     };
   },
   components: {
@@ -51,7 +51,7 @@ export default {
           } else {
             if (res.data.data.link) {
               console.log(res.data.data.link);
-               window.location.href = res.data.data.link
+              window.location.href = res.data.data.link;
             }
           }
         } else if (res.data.code === 1001) {
@@ -65,41 +65,40 @@ export default {
         }
       });
     },
-    initView(){
-      this.$get('/init').then(res=>{
-        console.log('init',res)
+    initView() {
+      this.$get("/init").then(res => {
+        console.log("init", res);
         if (res.data.code === 200) {
-          if (res.data.data.showInvite){
+          if (res.data.data.showInvite) {
             this.$router.push("/invite");
           } else {
             this.getCartList();
           }
         }
-      })
+      });
     }
   },
   mounted() {
-      this.initView()
+    this.initView();
 
-      
-      // 分享
-      //this.share(this.get2, this.wx,this.$store.state.shareImg);
-        this.share(this.get2,this.wx)
+    // 分享
+    //this.share(this.get2, this.wx,this.$store.state.shareImg);
+    this.share(this.get2, this.wx);
   }
 };
 </script>
 
-<style>
+<style scoped lang="scss">
 .cart_list {
   margin: 0 10px 52px;
-}
-.no_cartlist {
-  margin-top: 10px;
-  height: 100px;
-  line-height: 100px;
-  text-align: center;
-  background: white;
-  border-radius: 8px;
+  .no_cartlist {
+    margin-top: 10px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    background: white;
+    border-radius: 8px;
+  }
 }
 @media only screen and (max-width: 320px) {
   .cart_list {

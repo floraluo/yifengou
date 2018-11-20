@@ -70,7 +70,7 @@ export default {
       this.idx = index;
       this.lastId = 0;
       // 点击此项菜单时，移动到可视区
-      console.log(this.scroll)
+      console.log(this.scroll);
       this.scroll.scrollToElement(this.$refs.navitem[index], 200, true, true);
       this.goodsType = this.navList[index].key;
       this.getGoodsData();
@@ -109,8 +109,8 @@ export default {
         console.log(res);
         let data = res.data.data;
         // 更新navlist
-        this.navList = this.navList.length ? this.navList : (data.typeList || []);
-         this.initTabScroll();    
+        this.navList = this.navList.length ? this.navList : data.typeList || [];
+        this.initTabScroll();
         // 商品是否还有下一页
         this.goodsListHasMore = data.hasMore;
 
@@ -175,87 +175,79 @@ export default {
 };
 </script>
 
-<style>
-.goods .rule_box {
-  background-color: white;
-  border: 2px solid #ffde37;
-  padding: 10px 10px 10px 8px;
-  border-radius: 10px;
-  margin: 10px;
+<style scoped lang="scss">
+.goods {
+  .rule_box {
+    background-color: white;
+    border: 2px solid #ffde37;
+    padding: 10px 10px 10px 8px;
+    border-radius: 10px;
+    margin: 10px;
+    span {
+      font-size: 12px;
+    }
+  }
+
+  .verify {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    padding: 5px 0;
+    background-color: #fde43d;
+    color: #774024;
+    border-radius: 50px;
+    font-size: 15px;
+    .tip {
+      font-size: 12px;
+    }
+  }
+
+  .goods_list {
+    margin: 10px;
+    padding-bottom: 50px;
+    .bottom_tip {
+      padding: 5px 0;
+      color: white;
+      text-align: center;
+    }
+  }
+
+  .type_nav {
+    width: 100%;
+    overflow: hidden;
+
+    .nav_list {
+      list-style: none;
+      margin: 0;
+      padding: 0 0 0 5px;
+      white-space: nowrap;
+
+      li {
+        list-style: none;
+        display: inline-block;
+        padding: 5px;
+        color: white;
+        text-align: center;
+        margin-right: 6px;
+        font-size: 15px;
+        &.active {
+          color: #fde43d;
+          border-bottom: 3px solid #fde43d;
+        }
+      }
+    }
+  }
 }
-.goods .rule_box span {
-  font-size: 12px;
-}
-.goods .verify {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
-  padding: 5px 0;
-  background-color: #fde43d;
-  color: #774024;
-  border-radius: 50px;
-  font-size: 15px;
-}
-.verify .tip {
-  font-size: 12px;
-}
-.goods .goods_list {
-  margin: 10px;
-  padding-bottom: 50px;
-}
-.goods .goods_list .bottom_tip {
-  padding: 5px 0;
-  color: white;
-  text-align: center;
-}
-.goods .van-tabs__line {
-  background: #fde43d;
-}
-.goods .van-tabs .van-tab {
-  background: #ec4e4f;
-  color: white;
-}
-.goods .van-tabs__nav {
-  background: transparent;
-}
-.goods .van-tab.van-tab--active {
-  color: #fde43d;
-}
-.goods .van-hairline--top-bottom::after {
-  border-width: 0;
-}
-.goods .type_nav {
-  width: 100%;
-  overflow: hidden;
-}
-.goods .type_nav .nav_list {
-  list-style: none;
-  margin: 0;
-  padding: 0 0 0 5px;
-  white-space: nowrap;
-}
-.goods .type_nav .nav_list li {
-  list-style: none;
-  display: inline-block;
-  padding: 5px;
-  color: white;
-  text-align: center;
-  margin-right: 6px;
-  font-size: 15px;
-}
-.goods .type_nav .nav_list li.active {
-  color: #fde43d;
-  border-bottom: 3px solid #fde43d;
-}
+
 @media only screen and (max-width: 320px) {
   .goods .rule_box {
     margin: 10px 5px;
     padding: 8px;
-  }
-  .goods .rule_box span {
-    font-size: 13px;
+    span {
+      font-size: 13px;
+    }
   }
   .goods .verify {
     margin: 8px;

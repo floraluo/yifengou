@@ -2,12 +2,12 @@
   <div>
     <!-- <div v-if="!showRefund" style="color:white;text-align:center;padding-top:10px;">数据加载中...</div> -->
     <div class="bind" v-if="showRefund">
-      <div class="invite_code">
+      <div class="invite-code">
         <div class="tip">
           邀请码<span>{{invite}}</span>
         </div>
       </div>
-      <div class="input_info">
+      <div class="input-info">
         <div class='tip'>收款支付宝
           <span class='text1'>（{{bindList.bind_time}}）</span>
           <span class='text2'>ID: {{id}}</span>
@@ -25,7 +25,7 @@
             <span class='inputType'>手机号</span>
             <input placeholder='输入手机号' v-model="phone" type="text" />
           </div>
-          <div class="save_btn" @click="saveUserInfo">保存</div>
+          <div class="save-btn" @click="saveUserInfo">保存</div>
         </div>
         <div class="warning">
           {{bindList.refund_time}}
@@ -49,8 +49,8 @@ export default {
       id: "",
 
       showRefund: false,
-      bindList:[],
-      invite:''
+      bindList: [],
+      invite: ""
     };
   },
   computed: {
@@ -114,10 +114,10 @@ export default {
             this.$router.push("/invite");
           } else {
             this.getUserInfo();
-            let list = JSON.parse(res.data.data.text)
-            this.bindList = list.bind_list
-            this.invite = res.data.data.invite
-            console.log('refund>>>>>>',this.bindList,this.invite)
+            let list = JSON.parse(res.data.data.text);
+            this.bindList = list.bind_list;
+            this.invite = res.data.data.invite;
+            console.log("refund>>>>>>", this.bindList, this.invite);
           }
         }
       });
@@ -136,99 +136,111 @@ export default {
 };
 </script>
 
-<style>
-.bind .invite_code,
-.bind .input_info {
-  margin: 10px;
-  background: white;
-  padding: 10px 0 10px;
-  font-size: 16px;
-}
-.bind .invite_code span {
-  margin-left: 100px;
-  color: #774024;
-}
-
-.bind .tip {
-  position: relative;
-  margin-left: 15px;
-  display: flex;
-  align-items: center;
-}
-.bind .tip::after {
-  content: "";
-  display: block;
-  width: 3px;
-  height: 100%;
-  background: #ffde37;
-  position: absolute;
-  top: 0;
-  left: -5px;
-}
-.bind .tip .text1 {
-  color: #ec4e4f;
-  font-size: 12px;
-  margin-right: 8px;
-}
-.bind .tip .text2 {
-  color: #999;
-  font-size: 12px;
-}
-.bind .input_info .form {
-  margin: 20px 20px 12px;
-}
-
-.bind .input_info .form > .text {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 40px;
-  background: #eee;
-  margin-bottom: 10px;
-}
-.bind .input_info .form .inputType {
-  margin-left: 10px;
-  width: 30%;
-}
-.bind .input_info .form input {
-  width: 64%;
-  font-size: 14px;
-  background-color: #eee;
-  border: none;
-  outline: none;
-}
-.bind .input_info .form .save_btn {
-  width: 100%;
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-  color: white;
-  background: #3f93e6;
-  border-radius: 5px;
-}
-.bind .input_info .warning {
-  margin-left: 10px;
-  font-size: 12px;
-  color: #ec4e4f;
-}
-@media only screen and (max-width: 320px) {
-  .bind .invite_code,
-  .bind .input_info {
-    margin: 0 5px 10px;
-  }
-  .bind .invite_code span {
-    margin-left: 90px;
-  }
-  .bind .tip {
-    margin-left: 10px;
-    font-size: 14px;
-  }
-  .bind .tip .text1 {
-    margin-right: 5px;
-  }
-  .bind .input_info .form {
+<style scoped lang="scss">
+.bind {
+  .invite-code {
     margin: 10px;
+    background: white;
+    padding: 10px 0 10px;
+    font-size: 16px;
+    span {
+      margin-left: 100px;
+      color: #774024;
+    }
+  }
+  .input-info {
+    margin: 10px;
+    background: white;
+    padding: 10px 0 10px;
+    font-size: 16px;
+    .form {
+      margin: 20px 20px 12px;
+      & > .text {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: 40px;
+        background: #eee;
+        margin-bottom: 10px;
+      }
+      .inputType {
+        margin-left: 10px;
+        width: 30%;
+      }
+      input {
+        width: 64%;
+        font-size: 14px;
+        background-color: #eee;
+        border: none;
+        outline: none;
+      }
+      .save-btn {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        color: white;
+        background: #3f93e6;
+        border-radius: 5px;
+      }
+    }
+    .warning {
+      margin-left: 10px;
+      font-size: 12px;
+      color: #ec4e4f;
+    }
+  }
+  .tip {
+    position: relative;
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    &::after {
+      content: "";
+      display: block;
+      width: 3px;
+      height: 100%;
+      background: #ffde37;
+      position: absolute;
+      top: 0;
+      left: -5px;
+    }
+    .text1 {
+      color: #ec4e4f;
+      font-size: 12px;
+      margin-right: 8px;
+    }
+
+    .text2 {
+      color: #999;
+      font-size: 12px;
+    }
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .bind {
+    .invite-code {
+      margin: 0 5px 10px;
+      span {
+        margin-left: 90px;
+      }
+    }
+    .input-info {
+      margin: 0 5px 10px;
+      .form {
+        margin: 10px;
+      }
+    }
+
+    .tip {
+      margin-left: 10px;
+      font-size: 14px;
+      .text1 {
+        margin-right: 5px;
+      }
+    }
   }
 }
 </style>
