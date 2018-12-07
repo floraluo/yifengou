@@ -2,7 +2,9 @@
   <div class="row goods" ref="goodsWrapper">
     <div :class="fixedFilterBar && $route.path === '/goods/search' ? 'type-nav fixed': 'type-nav'" ref="wrapper">
       <ul class="nav-list" ref="navlist">
-        <li v-for="(item,index) in categories" :key="index" ref="navitem" :class="{active:markCateIndex===index}" @click="switchGoodsType(index)">
+        <li v-for="(item,index) in categories" :key="index" ref="navitem"
+            :class="{active: $route.query.goodsType && +$route.query.goodsType === +item.id}"
+            @click="switchGoodsType(item)">
           {{item.name}}
         </li>
       </ul>
@@ -74,20 +76,25 @@
         getGoodsList(false, done);
       },
       // 点击切换商品类型
-      switchGoodsType(index) {
+      switchGoodsType(item) {
         // 点击项高亮
-        this.markCateIndex = index;
-        this.goodsType = this.categories[index].id;
+        // this.markCateIndex = index;
+        // this.goodsType = this.categories[index].id;
         // 点击此项菜单时，移动到可视区
         // this.scroll.scrollToElement(this.$refs.navitem[index], 200, true, true);
-        document.documentElement.scrollTop = goodsListTop
-        console.log('click scroll category');
-        getGoodsList() //switchGoodsType
+        document.documentElement.scrollTop = goodsListTop;
+        this.$router.push({
+          path: '/goods/search',
+          query: {
+            id: 0,
+            goodsType: item.id
+          }
+        })
+        // getGoodsList() //switchGoodsType
       },
       // 点击购买商品
       goBuy(id) {
-        this.$get("/h5/goods/link", { id }).then(res => {
-          console.log(res);
+        this.$get("/goods/link", { id }).then(res => {
           if (res.code === 200) {
             if (res.data.limit && res.data.link) {
               this.$toast.center(res.data.limitMsg);
@@ -97,11 +104,11 @@
                 window.location.href = res.data.link;
               }
             }
-          } else if (res.code === 1001) {
+          } else if (res.code === 900) {
             this.$toast.center("活动时间还没到哦");
-          } else if (res.code === 1002) {
+          } else if (res.code === 901) {
             this.$toast.center("活动时间已经结束了");
-          } else if (res.code === 1003) {
+          } else if (res.code === 902) {
             this.$toast.center("该商品已经下架");
           } else {
             this.$toast.center("请重试");
@@ -116,26 +123,31 @@
         }
       },
 
-      // 点击换一批
-      // updateGoods() {
-      //   this.goodsList = [];
-      //   console.log('update goods');
-      //   getGoodsList(); //updateGoods
-      //   window.scrollTo(0, 0);
-      // },
-
       // scroll初始化
       initTabScroll() {
-        let width = Number(document.getElementsByTagName('html')[0].style.fontSize.slice(0,-2)) * 0.32 * 2;
+        let startX = 0,
+          maxOffsetX,
+          goodsType = +this.$route.query.goodsType,width = Number(document.getElementsByTagName('html')[0].style.fontSize.slice(0,-2)) * 0.32 * 2;
         for (let i = 0; i < this.categories.length; i++) {
           // width += this.$refs.navitem[1].getBoundingClientRect().width;
           width += 70;
+        }
+        maxOffsetX = width - document.body.clientWidth;
+        if (goodsType) {
+          this.categories.some((item, index) => {
+            if (item.id === goodsType){
+              startX = 70 * index;
+              if (startX > maxOffsetX) startX = maxOffsetX;
+              startX = startX * -1;
+              return true;
+            }
+          })
         }
         this.$refs.navlist.style.width = width + "px";
         this.$nextTick(() => {
           if (!this.scroll) {
             this.scroll = new BScroll(this.$refs.wrapper, {
-              startX: 0,
+              startX,
               click: true,
               scrollX: true,
               scrollY: false,
@@ -143,6 +155,7 @@
             });
           } else {
             this.scroll.refresh();
+            this.scroll.scrollTo(startX, 0)
           }
         });
       }
@@ -154,7 +167,7 @@
       window.onscroll = function () {
         goodsListTop = vm.$refs.goodsWrapper.offsetTop - 40;
         vm.fixedFilterBar = document.documentElement.scrollTop >= goodsListTop;
-        if (vm.fixedFilterBar && !vm.scroll) {
+        if (vm.fixedFilterBar ) {
           vm.initTabScroll();
         }
       }
