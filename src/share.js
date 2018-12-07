@@ -1,42 +1,8 @@
 let share = (get, wx) => {
   // share.js改写版
-  var chars = [
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z"
+  var chars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D",
+    "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
+    "U", "V", "W", "X", "Y", "Z"
   ];
 
   function generateMixed(n) {
@@ -51,14 +17,16 @@ let share = (get, wx) => {
   var nonceStr = generateMixed(16);
   var url = "http://buy.51zhuanfan.com";
 
-  get("http://47.96.17.80:9400/h5/wx/config", {
+  // get("http://47.96.17.80:9400/h5/wx/config", {
+  get(process.env.BASE_URL + "/h5/wx/config", {
     timestamp,
     nonceStr,
     url: location.href.split("#")[0]
   }).then(res => {
     // console.log("测试分享api", res);
-    var appId = res.data.data.appId;
-    var signature = res.data.data.signature;
+    let data = res.data,
+      appId = data.appId,
+      signature = data.signature;
     wx.config({
       debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，
       // 若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。

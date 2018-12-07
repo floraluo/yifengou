@@ -1,40 +1,29 @@
 <template>
-  <div>
-    <div class="goods">
-      <div class="rule_box">
-        <div v-for="(itemList,index) in indexList" :key="index">
-          <span v-for="(item,idx) in itemList" :key="idx" :style="{color:item.color}">{{item.text}}</span>
-        </div>
-      </div>
-      <div class="verify" @click="gotoOrder">
-        <div>下单后验证订单>></div>
-        <div class="tip">(验证完订单并绑定提现账号后才可获得补贴)</div>
-      </div>
-      <div class="type_nav" ref="wrapper">
-        <ul class="nav_list" ref="navlist">
-          <li v-for="(item,index) in navList" :key="index" ref="navitem" :class="{active:idx===index}" @click="switchGoodsType(index)">
-            {{item.value}}
-          </li>
-        </ul>
-      </div>
-      <div class="goods_list">
-        <list-item v-for="(item,index) in goodsList" @click.native="goBuy(item.id)" :key="index" :id="item.id" :pic="item.goodsImg" :name="item.goodsContent" :couponPrice="item.couponPrice" :discountPrice="item.discountPrice" :goodsPrice="item.goodsPrice" />
-        <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="20">
-          <div class="bottom_tip" @click="updateGoods">{{bootomText}}</div>
-        </div>
+  <div class="row goods" ref="goodsWrapper">
+    <div :class="fixedFilterBar ? 'type-nav fixed': 'type-nav'" ref="wrapper">
+      <ul class="nav-list" ref="navlist">
+        <li v-for="(item,index) in navList" :key="index" ref="navitem" :class="{active:idx===index}" @click="switchGoodsType(index)">
+          {{item.value}}
+        </li>
+      </ul>
+    </div>
+    <div class="goods-list">
+      <list-item v-for="(item,index) in goodsList" @click.native="goBuy(item.id)" :key="index" :id="item.id" :pic="item.goodsImg" :name="item.goodsContent" :couponPrice="item.couponPrice" :discountPrice="item.discountPrice" :goodsPrice="item.goodsPrice" />
+      <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="20">
+        <div class="bottom-tip" @click="updateGoods">{{bootomText}}</div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
 import BScroll from "better-scroll";
-//import local from "@/config/storage";
 import listItem from "@/components/listItem";
+let vm, goodsListTop;
 export default {
   data() {
     return {
+      fixedFilterBar: false,
       idx: 0, // 控制商品类型菜单的显示
       navList: [],
       scroll: null, // scroll实例（参考better-scroll）
@@ -71,28 +60,29 @@ export default {
       this.lastId = 0;
       // 点击此项菜单时，移动到可视区
       console.log(this.scroll);
-      this.scroll.scrollToElement(this.$refs.navitem[index], 200, true, true);
+      // this.scroll.scrollToElement(this.$refs.navitem[index], 200, true, true);
+      document.documentElement.scrollTop = goodsListTop
       this.goodsType = this.navList[index].key;
       this.getGoodsData();
     },
     // 点击购买商品
     goBuy(id) {
-      this.$get("/goods/link", { id }).then(res => {
+      this.$get("/h5/goods/link", { id }).then(res => {
         console.log(res);
-        if (res.data.code === 200) {
-          if (res.data.data.limit && res.data.data.link) {
-            this.$toast.center(res.data.data.limitMsg);
+        if (res.code === 200) {
+          if (res.data.limit && res.data.link) {
+            this.$toast.center(res.data.limitMsg);
           } else {
-            if (res.data.data.link) {
-              console.log(res.data.data.link);
-              window.location.href = res.data.data.link;
+            if (res.data.link) {
+              console.log(res.data.link);
+              window.location.href = res.data.link;
             }
           }
-        } else if (res.data.code === 1001) {
+        } else if (res.code === 1001) {
           this.$toast.center("活动时间还没到哦");
-        } else if (res.data.code === 1002) {
+        } else if (res.code === 1002) {
           this.$toast.center("活动时间已经结束了");
-        } else if (res.data.code === 1003) {
+        } else if (res.code === 1003) {
           this.$toast.center("该商品已经下架");
         } else {
           this.$toast.center("请重试");
@@ -101,13 +91,13 @@ export default {
     },
     // 请求商品数据
     getGoodsData() {
-      this.$get("/goods/list", {
+      this.$get("/h5/goods/list", {
         id: this.lastId,
         goodsType: this.goodsType,
         pageSize: 20
       }).then(res => {
         console.log(res);
-        let data = res.data.data;
+        let data = res.data;
         // 更新navlist
         this.navList = this.navList.length ? this.navList : data.typeList || [];
         this.initTabScroll();
@@ -171,90 +161,80 @@ export default {
   },
   mounted() {
     this.getGoodsData();
+    window.onscroll = function () {
+      goodsListTop = vm.$refs.goodsWrapper.offsetTop
+      vm.fixedFilterBar = document.documentElement.scrollTop >= goodsListTop
+      console.log(document.documentElement.scrollTop, goodsListTop)
+    }
+  },
+  created() {
+    vm = this;
   }
 };
 </script>
 
 <style scoped lang="scss">
+  @import "../../sass/variables";
 .goods {
-  .rule_box {
-    background-color: white;
-    border: 2px solid #ffde37;
-    padding: 10px 10px 10px 8px;
-    border-radius: 10px;
-    margin: 10px;
-    span {
-      font-size: 12px;
-    }
-  }
-
-  .verify {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 10px;
-    padding: 5px 0;
-    background-color: #fde43d;
-    color: #774024;
-    border-radius: 50px;
-    font-size: 15px;
-    .tip {
-      font-size: 12px;
-    }
-  }
-
-  .goods_list {
-    margin: 10px;
+  position: relative;
+  padding-top: $filter-bar-height + 5px;
+  margin-bottom: 0;
+  .goods-list {
     padding-bottom: 50px;
-    .bottom_tip {
+    background-color: #fff;
+    .bottom-tip {
       padding: 5px 0;
       color: white;
       text-align: center;
     }
   }
 
-  .type_nav {
+  .type-nav {
+    position: absolute;
+    top: 0;
     width: 100%;
+    max-width: 750px;
+    height: $filter-bar-height;
+    line-height: $filter-bar-height;
     overflow: hidden;
-
-    .nav_list {
+    background-color: #fff;
+    .nav-list {
+      padding-left: $gutter-margin;
+      padding-right: $gutter-margin;
       list-style: none;
       margin: 0;
-      padding: 0 0 0 5px;
+      /*padding: 0;*/
       white-space: nowrap;
 
       li {
+        position: relative;
         list-style: none;
+        padding-left: 5px;
+        padding-right: 5px;
         display: inline-block;
-        padding: 5px;
-        color: white;
         text-align: center;
-        margin-right: 6px;
         font-size: 15px;
         &.active {
-          color: #fde43d;
-          border-bottom: 3px solid #fde43d;
+          color: $theme-color;
+          /*#fde43d*/
+          &:after{
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: $theme-color;
+          }
         }
       }
     }
-  }
-}
-
-@media only screen and (max-width: 320px) {
-  .goods .rule_box {
-    margin: 10px 5px;
-    padding: 8px;
-    span {
-      font-size: 13px;
+    &.fixed{
+      position: fixed;
+      z-index: 1;
+      box-shadow: 0 0 5px rgba(0,0,0,.2);
     }
-  }
-  .goods .verify {
-    margin: 8px;
-    border-radius: 40px;
-  }
-  .goods .goods_list {
-    margin: 10px 5px;
   }
 }
 </style>

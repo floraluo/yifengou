@@ -1,18 +1,24 @@
 <template>
   <div class="row cart-list">
-    <div v-if="!cartList.length" class="no-cartlist">购物车还没有任何商品哦，快去添加吧</div>
+    <div v-if="!$store.state.cartList.length" class="no-cartlist">购物车还没有任何商品哦o(╥﹏╥)o</div>
     <!-- 购物车列表 -->
-    <list-item v-for="(item,index) in cartList"
+    <!--<cart-item v-for="(item,index) in cartList"-->
+               <!--:key="index"-->
+               <!--@click.native="goBuy(item.id)"-->
+               <!--:id="item.id"-->
+               <!--:pic="item.goodsImg"-->
+               <!--:name="item.goodsContent"-->
+               <!--:couponPrice="item.couponPrice"-->
+               <!--:discountPrice="item.discountPrice"-->
+               <!--:goodsPrice="item.goodsPrice"-->
+               <!--@updateCartList="updateList">-->
+    <!--</cart-item>-->
+    <list-item v-for="(item,index) in $store.state.cartList"
                @click.native="goBuy(item.id)"
                :key="index"
-               :id="item.id"
-               :pic="item.goodsImg"
-               :name="item.goodsContent"
-               :couponPrice="item.couponPrice"
-               :discountPrice="item.discountPrice"
-               :goodsPrice="item.goodsPrice"
                :goods="item"
-               @updateCartList="updateList"/>
+               :index="index"
+               @delete-goods="deleteGoodsInCart"/>
   </div>
 </template>
 
@@ -20,6 +26,8 @@
 import cartItem from "@/components/cartItem";
 import listItem from "@/components/listItem";
 
+import tabbar from "../../components/tabbar";
+import login from "../../module/login";
 export default {
   data() {
     return {
@@ -32,21 +40,11 @@ export default {
     listItem
   },
   methods: {
-    // 获取购物车列表
-    getCartList() {
-      this.$get("/cart/list").then(res => {
-        console.log("获取", res);
-        if (res.code === 200) {
-          this.cartList = res.data;
-        } else {
-          this.cartList = [];
-        }
-      });
-    },
-
-    // 删除后 更新列表
-    updateList() {
-      this.getCartList();
+    //删除购物车中商品
+    deleteGoodsInCart(index) {
+      // this.getCartList();
+      // this.cartList.splice(index, 1);
+      this.$store.commit('deleteGoodsInCart', index)
     },
 
     // 点击购买商品
@@ -72,26 +70,20 @@ export default {
           this.$toast.center("请重试");
         }
       });
-    },
-    initView() {
-      // this.$get("/v2/init").then(res => {
-      //   console.log("init", res);
-      //   if (res.code === 200) {
-      //     if (res.data.showInvite) {
-      //       this.$router.push("/invite");
-      //     } else {
-      //       this.getCartList();
-      //     }
-      //   }
-      // });
     }
   },
   mounted() {
-    // this.initView();
-    this.getCartList();
     // 分享
-    //this.share(this.get2, this.wx,this.$store.state.shareImg);
+    // this.share(this.get2, this.wx,this.$store.state.shareImg);
     this.share(this.get2, this.wx);
+  },
+  activated () {
+    //每次进入购物车重新获取数据
+    this.$get("/cart/list").then(res => {
+      if (res.code === 200) {
+        this.$store.commit('setCartList',res.data || [])
+      }
+    })
   }
 };
 </script>
@@ -100,7 +92,6 @@ export default {
 .cart-list {
   margin-bottom: 0;
   .no-cartlist {
-    margin-top: 10px;
     height: 100px;
     line-height: 100px;
     text-align: center;

@@ -2,29 +2,28 @@ import { get, post } from "../config/request";
 import Cookie from "js-cookie";
 
 function getQueryString(name) {
-  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-  var r = window.location.search.substr(1).match(reg);
+  let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+  let r = window.location.search.substr(1).match(reg);
   if (r != null) return unescape(r[2]);
   return "";
 }
 
-var channel = getQueryString("c");
-var code = getQueryString("code");
+let channel = getQueryString("c");
+let code = getQueryString("code");
 
-var url =
+let url =
   "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf0f511ae22ff266c" +
   "&redirect_uri=http%3A%2F%2Fbuy.51zhuanfan.com%3Fc%3D" +
   channel +
   "&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
 
-var login = function() {
+function login () {
   window.location.href = url;
-};
+}
 
-var init = function() {
-  if (code) {
+let init = function() {
+  if (!!code) {
     post("/user/wx/login", { code: code, channel: channel }).then(res => {
-      //console.log('init',res)
       let data = res.data.data;
       console.log("data", data);
       // 存储到本地,用cookie加上前缀buy_h5_userid
@@ -34,24 +33,21 @@ var init = function() {
       window.location.href = "/";
     });
   } else {
-    get("/user/info", {}).then(res => {
-      if (res.data.code === 600 || res.data.code === 700) {
-        // 重新登录
-        login();
-      }
+    return new Promise((resolve, reject) => {
+      resolve();
     });
   }
 };
 
-var initData = -1;
+let initData = -1;
 
-var setInitData = b => {
+let setInitData = b => {
   initData = b;
 };
 
-var checkInitData = () => {
+let checkInitData = () => {
   return new Promise((resolve, reject) => {
-    var func = function() {
+    let func = function() {
       if (initData === 1) {
         resolve();
       }
@@ -70,6 +66,7 @@ var checkInitData = () => {
 
 export default {
   init,
+  login,
   setInitData,
   checkInitData
 };

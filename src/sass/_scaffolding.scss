@@ -1,0 +1,49 @@
+//重置box-sizing为border-box可能会与第三方组件样式冲突。方案：
+//.reset-content-box{
+//  * {
+//    box-sizing: content-box;
+//  }
+//  *:before,
+//  *:after {
+//    box-sizing: content-box;
+//  }
+//}
+* {
+  box-sizing: border-box;
+}
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+// Reset fonts for relevant elements
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+// Body reset
+html{
+  min-height: 100%;
+  max-width: 750px;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0,0,0,.2);
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+body {
+  margin: 0;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /*background: #ec4e4f;*/
+  font-size: 14px;
+  background-color: #f5fafc;
+}
+
+a{
+  text-decoration: none;
+}

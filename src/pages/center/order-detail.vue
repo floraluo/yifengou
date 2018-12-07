@@ -1,70 +1,61 @@
 <template>
   <div class="order">
     <base-loading :loading="loading"></base-loading>
-    <base-refresh :on-refresh="doRefresh">
-      <div class="page-title">{{orderName || ' '}}</div>
-      <div class="order-info">
-        <div>
-          <span class="num">{{orderCount || '--'}}</span>
-          <span class="desc">预估有效订单（笔）</span>
-        </div>
-        <div>
-          <span class="num">{{allMoney | formatMoney}}</span>
-          <span class="desc">预估补贴返现（元）</span>
-        </div>
+    <div class="page-title">{{orderName || ' '}}</div>
+    <div class="order-info">
+      <div>
+        <span class="num">{{orderCount || '--'}}</span>
+        <span class="desc">预估有效订单（笔）</span>
       </div>
-      <div class="order-tips">由于订单量大，同步订单数据会有延迟，请耐心等待，不要随意退款！</div>
-      <div class="order-list">
+      <div>
+        <span class="num">{{allMoney | formatMoney}}</span>
+        <span class="desc">预估补贴返现（元）</span>
+      </div>
+    </div>
+    <div class="order-tips">由于订单量大，同步订单数据会有延迟，请耐心等待，不要随意退款！</div>
+    <div class="order-list">
       <div class="no-order" v-if="orderList.length === 0">暂无订单</div>
       <div class="order-item" v-for="(item,index) in orderList" :key="index" v-else>
         <div>{{item.orderNo}}</div>
         <div :class="{fail: item.color === 2, success: item.color === 1}">{{item.statusName}}</div>
       </div>
     </div>
-    </base-refresh>
   </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      loading: true,
-      orderName: null,
-      orderCount: null,
-      allMoney: null,
-      orderList: []
-    }
-  },
-  methods: {
-    doRefresh(done) {
-      getOrderInfo.call(this,done); //doRefresh
+  let vm
+  export default {
+    name: 'order-detail',
+    data () {
+      return {
+        loading: true,
+        orderName: null,
+        orderCount: null,
+        allMoney: null,
+        orderList: []
+      }
     },
-  },
-  created() {
-    getOrderInfo.call(this);
-  }
-}
-
-function getOrderInfo(callback) {
-  this.loading = true;
-  this.$get("/order").then(res => {
-    let data = res.data;
-    if (res.code === 200) {
-      this.orderName = data.name;
-      this.orderCount = String(data.count);
-      this.allMoney = data.money;
-      this.orderList = data.list;
-      this.loading = false;
+    methods: {},
+    created () {
+      vm = this
+    },
+    activated() {
+      this.$get("/order/history", this.$route.query).then(res => {
+        let data = res.data;
+        if (res.code === 200) {
+          this.orderName = data.name;
+          this.orderCount = String(data.count);
+          this.allMoney = data.money;
+          this.orderList = data.list;
+          this.loading = false;
+        }
+      });
     }
-
-    // 下拉刷新组件中，刷新成功需要callback
-    if (callback) callback();
-  });
-}
+  }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
   @import "../../sass/variables";
   .order {
     .page-title{

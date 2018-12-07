@@ -2,8 +2,16 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+    <!--<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>点我优惠购</title>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_930731_2v2sqfu25z7.css">
+    <script>
+      (function () {
+        let clientWidth = document.documentElement.clientWidth > 750 ? 750 : document.documentElement.clientWidth
+        document.documentElement.style.fontSize = clientWidth / 10 + 'px';
+      })()
+    </script>
   </head>
   <body>
     <div id="app"></div>
