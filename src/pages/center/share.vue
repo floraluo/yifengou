@@ -3,6 +3,10 @@
     <img src="../../assets/image/bind-alipay-bg.png" alt="" ref="testimg" style="display: none">
     <canvas ref="canvas"></canvas>
     <img  alt="" ref="shareImg">
+    <div class="btn-group">
+      <button class="btn btn-warning btn-round" type="button">分享好友</button>
+      <button class="btn btn-default btn-round" type="button" @click="saveImg">保存图片</button>
+    </div>
   </div>
 </template>
 
@@ -14,7 +18,17 @@
     data () {
       return {}
     },
-    methods: {},
+    methods: {
+      saveImg() {
+        wx.downloadImage({
+          serverId: '', // 需要下载的图片的服务器端ID，由uploadImage接口获得
+          isShowProgressTips: 1, // 默认为1，显示进度提示
+          success: function (res) {
+            var localId = res.localId; // 返回图片下载后的本地ID
+          }
+        });
+      }
+    },
     created () {
       vm = this;
     },
@@ -50,5 +64,20 @@
 </script>
 
 <style scoped lang='scss'>
-
+.btn-group{
+  display: flex;
+  > button{
+    flex: 1;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    &:first-child{
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    &:last-child{
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}
 </style>

@@ -2,13 +2,13 @@
   <div>
     <base-refresh
       :on-refresh="doRefresh">
-      <div class="row row-search">
-        <div class="input-group">
-          <i class="iconfont icon-search"></i>
-          <input type="text" placeholder="请输入关键字搜索">
-        </div>
-        <button class="btn btn-round btn-default" type="button">搜索</button>
-      </div>
+      <!--<div class="row row-search">-->
+        <!--<div class="input-group">-->
+          <!--<i class="iconfont icon-search"></i>-->
+          <!--<input type="text" placeholder="请输入关键字搜索">-->
+        <!--</div>-->
+        <!--<button class="btn btn-round btn-default" type="button">搜索</button>-->
+      <!--</div>-->
       <goods-category v-if="!$route.query.goodsGroup"></goods-category>
       <hr>
       <goods-list ref="goodsList"></goods-list>
@@ -60,8 +60,14 @@
       margin-right: 10px;
       .icon-search{
         position: absolute;
-        left: 0.35rem;
-        top: 0.19rem;
+        display: flex;
+        height: 100%;
+        width: .9rem;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.43rem;
+        /*left: 0.35rem;*/
+        /*top: 0.19rem;*/
         color: #d6d6d6;
       }
       input{

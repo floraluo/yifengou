@@ -74,6 +74,13 @@ a.btn {
   @include button-variant($btn-outline-gray-color, $btn-outline-gray-bg, $btn-outline-gray-border, outline);
 }
 
+.btn-warning{
+  @include button-variant($btn-warning-color, $btn-warning-bg, $btn-warning-border);
+}
+.btn-outline-warning {
+  @include button-variant($btn-outline-warning-color, $btn-outline-warning-bg, $btn-outline-warning-border, outline);
+}
+
 .btn-round{
   border-radius: 50px;
 }

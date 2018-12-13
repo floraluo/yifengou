@@ -1,6 +1,6 @@
 <template>
   <div class="row goods" ref="goodsWrapper">
-    <div :class="fixedFilterBar && $route.path === '/goods/search' ? 'type-nav fixed': 'type-nav'" ref="wrapper">
+    <div :class="fixedFilterBar ? 'type-nav fixed': 'type-nav'" ref="wrapper">
       <ul class="nav-list" ref="navlist">
         <li v-for="(item,index) in categories" :key="index" ref="navitem"
             :class="{active: $route.query.goodsType && +$route.query.goodsType === +item.id}"
@@ -127,12 +127,13 @@
       initTabScroll() {
         let startX = 0,
           maxOffsetX,
-          goodsType = +this.$route.query.goodsType,width = Number(document.getElementsByTagName('html')[0].style.fontSize.slice(0,-2)) * 0.32 * 2;
+          goodsType = +this.$route.query.goodsType,
+          width = Number(document.getElementsByTagName('html')[0].style.fontSize.slice(0,-2)) * 0.32 * 2;
         for (let i = 0; i < this.categories.length; i++) {
           // width += this.$refs.navitem[1].getBoundingClientRect().width;
           width += 70;
         }
-        maxOffsetX = width - document.body.clientWidth;
+        maxOffsetX = width - document.body.clientWidth >0 ? width - document.body.clientWidth : 0;
         if (goodsType) {
           this.categories.some((item, index) => {
             if (item.id === goodsType){
@@ -166,7 +167,7 @@
     mounted() {
       window.onscroll = function () {
         goodsListTop = vm.$refs.goodsWrapper.offsetTop - 40;
-        vm.fixedFilterBar = document.documentElement.scrollTop >= goodsListTop;
+        vm.fixedFilterBar = document.documentElement.scrollTop >= goodsListTop && vm.$route.path === '/goods/search' && vm.$route.query.goodsGroup === undefined;
         if (vm.fixedFilterBar ) {
           vm.initTabScroll();
         }

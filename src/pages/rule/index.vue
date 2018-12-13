@@ -98,9 +98,10 @@ export default {
         margin-bottom: 0.27rem;
         span{
           display: inline-block;
-          padding: 5px 12px;
+          padding: 0.16rem 0.32rem;
           border-radius: 50px;
           font-size: 0.48rem;
+          line-height: 1;
           color: #fff;
           background-color: #f8a0da;
         }
