@@ -52,11 +52,11 @@ npm run dev
 * init接口调用一遍就够了
 * style scoped 不起作用
 
-##项目依赖插件
+## 项目依赖插件
 - [VeeValidate](https://github.com/baianat/vee-validate)<sup>表单验证</sup>
 - [moment](https://github.com/moment/moment/)<sup>格式化时间</sup>
 
-##采坑集合
+## 采坑集合
 1. 对公用组件中的全局vm变量赋值this，最好不要在create生命周期中。
 返回上一个页面时，vm是指向最后一个页面组件的。
 
